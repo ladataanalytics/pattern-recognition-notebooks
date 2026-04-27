@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pattern Recognition for the Rest of Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6f8;
+  --bg2: #ffffff;
+  --bg3: #eef0f3;
+  --surface: #e8eaed;
+  --border: #d8dbe0;
+  --border2: #b8bcc4;
+  --text: #1a1d23;
+  --muted: #5c6270;
+  --accent: #e85d20;
+  --accent2: #c44010;
+  --blue: #1e5fa8;
+  --blue2: #1a4f8f;
+  --blue-light: #e8f0fb;
+  --green: #1a7a45;
+  --green-light: #e6f5ed;
+  --red: #c0392b;
+  --purple: #6b46c1;
+  --font-serif: 'DM Serif Display', serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
+  --r: 10px;
+  --r-sm: 6px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-sans);
+  font-size:14px;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    radial-gradient(ellipse 70% 40% at 95% 5%, rgba(30,95,168,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 30% at 5% 95%, rgba(232,93,32,.04) 0%, transparent 55%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 32px;
+  display:flex;align-items:center;gap:20px;height:60px;
+  box-shadow:var(--shadow-sm);
+}
+.logo{
+  font-family:var(--font-serif);
+  font-size:19px;
+  color:var(--blue);
+  white-space:nowrap;
+  letter-spacing:-.2px;
+}
+.logo span{color:var(--muted);font-size:13px;font-family:var(--font-sans);font-style:italic;margin-left:6px}
+#search{
+  flex:1;max-width:380px;
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:7px 12px 7px 34px;
+  color:var(--text);
+  font-family:var(--font-sans);
+  font-size:13px;
+  outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235c6270' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:10px center;
+  transition:border-color .2s, box-shadow .2s;
+}
+#search:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,95,168,.12)}
+#search::placeholder{color:var(--muted)}
+
+.header-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+#progress-summary{font-size:12px;color:var(--muted)}
+#progress-summary strong{color:var(--accent)}
+.btn-outline{
+  padding:6px 14px;
+  border:1px solid var(--border2);
+  border-radius:6px;
+  background:none;
+  color:var(--muted);
+  font-family:var(--font-sans);font-size:12px;
+  cursor:pointer;transition:all .18s;white-space:nowrap;
+  text-decoration:none;display:inline-flex;align-items:center;gap:5px;
+}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-light)}
+
+/* ── HERO ── */
+.hero{
+  padding:52px 32px 36px;
+  max-width:960px;
+  position:relative;z-index:1;
+}
+.hero-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-eyebrow::after{content:'';flex:1;max-width:40px;height:1px;background:var(--accent);opacity:.4}
+.hero h1{
+  font-family:var(--font-serif);
+  font-size:clamp(28px,4vw,46px);
+  line-height:1.18;
+  color:var(--text);
+  margin-bottom:14px;
+}
+.hero h1 em{color:var(--blue);font-style:italic}
+.hero h1 strong{color:var(--accent)}
+.hero p{font-size:15px;color:var(--muted);max-width:580px;line-height:1.75;margin-bottom:28px}
+.hero-stats{display:flex;gap:0;flex-wrap:wrap;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-sm);overflow:hidden;width:fit-content}
+.stat{
+  display:flex;flex-direction:column;gap:2px;
+  padding:16px 24px;
+  border-right:1px solid var(--border);
+}
+.stat:last-child{border-right:none}
+.stat-val{font-family:var(--font-mono);font-size:22px;font-weight:500;color:var(--accent)}
+.stat-val.blue{color:var(--blue)}
+.stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+
+/* ── SETUP BANNER ── */
+.setup-banner{
+  margin:0 32px 0;
+  background:var(--blue-light);
+  border:1px solid rgba(30,95,168,.2);
+  border-radius:var(--r);
+  overflow:hidden;
+}
+.setup-banner-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 18px;
+  cursor:pointer;
+  user-select:none;
+}
+.setup-banner-header:hover{background:rgba(30,95,168,.05)}
+.setup-banner-title{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;color:var(--blue);
+}
+.setup-toggle{
+  font-size:11px;color:var(--blue);background:none;border:none;cursor:pointer;
+  font-family:var(--font-sans);padding:3px 8px;
+  border:1px solid rgba(30,95,168,.3);border-radius:4px;
+}
+.setup-body{
+  padding:0 18px 18px;
+  display:none;
+}
+.setup-body.open{display:block}
+.setup-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:4px}
+.setup-step{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:14px;
+  display:flex;gap:12px;
+}
+.step-num{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  font-size:11px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
+.step-text{font-size:12px;color:var(--muted);line-height:1.6}
+.step-text strong{color:var(--text)}
+.step-text a{color:var(--blue);text-decoration:none}
+.step-text a:hover{text-decoration:underline}
+.step-text code{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:3px;padding:1px 5px;font-family:var(--font-mono);font-size:11px;
+  color:var(--text);
+}
+
+/* ── PROGRESS BAR ── */
+#global-progress{
+  position:relative;z-index:1;
+  padding:20px 32px 16px;
+}
+.prog-track{height:4px;background:var(--border);border-radius:2px;margin-bottom:6px}
+.prog-fill{height:4px;background:linear-gradient(90deg,var(--blue),var(--accent));border-radius:2px;transition:width .6s ease;width:0%}
+.prog-label{font-size:11px;color:var(--muted)}
+
+/* ── FILTER CHIPS ── */
+.filters{
+  position:sticky;top:60px;z-index:90;
+  background:rgba(245,246,248,.96);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:10px 32px;
+  display:flex;gap:7px;flex-wrap:wrap;
+  align-items:center;
+}
+.chip{
+  padding:4px 13px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  font-size:12px;color:var(--muted);
+  cursor:pointer;background:var(--bg2);
+  font-family:var(--font-sans);
+  transition:all .15s;white-space:nowrap;
+  box-shadow:var(--shadow-sm);
+}
+.chip:hover{border-color:var(--border2);color:var(--text)}
+.chip.active{
+  background:var(--blue);
+  border-color:var(--blue);
+  color:#fff;
+  font-weight:500;
+  box-shadow:0 2px 6px rgba(30,95,168,.25);
+}
+.chip.status{border-style:dashed;background:none;box-shadow:none}
+.chip.status.active{background:var(--accent);border-color:var(--accent);border-style:solid}
+
+/* ── MAIN GRID ── */
+main{
+  padding:28px 32px;
+  position:relative;z-index:1;
+}
+.section{margin-bottom:44px}
+.section-header{
+  display:flex;align-items:baseline;gap:10px;
+  margin-bottom:16px;
+  padding-bottom:10px;
+  border-bottom:2px solid var(--border);
+}
+.section-title{
+  font-family:var(--font-serif);
+  font-size:18px;
+  color:var(--text);
+}
+.section-title-accent{
+  display:inline-block;
+  width:10px;height:10px;border-radius:2px;
+  margin-right:6px;vertical-align:middle;
+  margin-bottom:2px;
+}
+.section-count{
+  font-size:11px;color:var(--muted);
+  font-family:var(--font-mono);
+  padding:2px 7px;
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:4px;
+}
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+}
+
+/* ── TECHNIQUE CARD ── */
+.card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:18px;
+  cursor:pointer;
+  transition:all .18s;
+  position:relative;
+  overflow:hidden;
+  display:flex;flex-direction:column;gap:10px;
+  text-decoration:none;
+  box-shadow:var(--shadow-sm);
+}
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:var(--card-accent,transparent);
+  opacity:0;
+  transition:opacity .18s;
+}
+.card:hover{
+  border-color:var(--border2);
+  box-shadow:var(--shadow-md);
+  transform:translateY(-2px);
+}
+.card:hover::before{opacity:1}
+.card.done{border-color:rgba(26,122,69,.25);background:#fdfffe}
+.card.done::before{background:var(--green);opacity:1}
+.card.in-progress::before{background:var(--accent);opacity:1}
+
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.card-emoji{font-size:20px;line-height:1;flex-shrink:0}
+.card-badges{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.badge{
+  font-size:10px;font-family:var(--font-mono);
+  padding:2px 6px;border-radius:4px;
+  border:1px solid currentColor;
+  white-space:nowrap;
+}
+.badge-islp{color:var(--blue);border-color:rgba(30,95,168,.3);background:var(--blue-light)}
+.badge-fpppy{color:#0e7490;border-color:rgba(14,116,144,.3);background:rgba(14,116,144,.07)}
+.badge-ext{color:var(--muted);border-color:var(--border);background:var(--bg3)}
+.badge-done{color:var(--green);border-color:rgba(26,122,69,.3);background:var(--green-light)}
+.badge-quiz{color:var(--purple);border-color:rgba(107,70,193,.3);background:rgba(107,70,193,.06)}
+.badge-new{color:var(--accent);border-color:rgba(232,93,32,.3);background:rgba(232,93,32,.06)}
+
+.card-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.3}
+.card-desc{font-size:12px;color:var(--muted);line-height:1.55}
+.card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:auto;padding-top:10px;
+  border-top:1px solid var(--border);
+  font-size:11px;color:var(--muted);
+}
+.card-links{display:flex;gap:7px}
+.card-link{
+  font-size:11px;color:var(--muted);
+  text-decoration:none;
+  padding:3px 8px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  transition:all .15s;
+  background:var(--bg3);
+  font-family:var(--font-mono);
+}
+.card-link:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-light)}
+.card-link.colab{color:var(--accent);border-color:rgba(232,93,32,.3);background:rgba(232,93,32,.04)}
+.card-link.colab:hover{border-color:var(--accent);background:rgba(232,93,32,.1)}
+
+/* ── QUIZ MODAL ── */
+#modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(20,25,35,.55);
+  backdrop-filter:blur(4px);
+  z-index:200;
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+#modal-overlay.open{display:flex}
+#modal{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  width:100%;max-width:600px;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:28px;
+  position:relative;
+  box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  background:none;border:1px solid var(--border);color:var(--muted);
+  font-size:16px;cursor:pointer;
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  border-radius:6px;transition:all .15s;
+}
+.modal-close:hover{background:var(--bg3);color:var(--text)}
+.modal-title{
+  font-family:var(--font-serif);font-size:22px;
+  color:var(--text);margin-bottom:3px;
+}
+.modal-subtitle{
+  font-size:12px;color:var(--muted);margin-bottom:18px;
+  display:flex;align-items:center;gap:6px;
+}
+.modal-subtitle::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+.quiz-section{margin-bottom:20px}
+.quiz-label{
+  font-size:10px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);margin-bottom:10px;font-family:var(--font-mono);
+  padding-bottom:8px;border-bottom:1px solid var(--border);
+}
+.quiz-q{font-size:13px;color:var(--text);margin-bottom:11px;line-height:1.6}
+.quiz-opts{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.quiz-opt{
+  padding:9px 13px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--bg3);
+  color:var(--text);
+  font-family:var(--font-sans);font-size:13px;
+  cursor:pointer;text-align:left;
+  transition:all .12s;
+  line-height:1.4;
+}
+.quiz-opt:hover{border-color:var(--blue);background:var(--blue-light);color:var(--blue)}
+.quiz-opt.correct{border-color:var(--green);background:var(--green-light);color:var(--green)}
+.quiz-opt.wrong{border-color:var(--red);background:rgba(192,57,43,.07);color:var(--red)}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{
+  font-size:12px;padding:10px 13px;border-radius:7px;
+  margin-top:8px;line-height:1.55;display:none;
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:var(--green-light);border:1px solid rgba(26,122,69,.25);color:#145c33}
+.quiz-feedback.no{background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.2);color:#922b21}
+
+.quiz-score-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 13px;
+  background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:14px;font-size:12px;color:var(--muted);
+}
+.score-dots{display:flex;gap:5px}
+.score-dot{width:9px;height:9px;border-radius:50%;background:var(--border)}
+.score-dot.hit{background:var(--green)}
+.score-dot.miss{background:var(--red)}
+
+.links-section{
+  padding:13px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;margin-bottom:14px;
+}
+.links-section h4{
+  font-size:10px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);margin-bottom:9px;font-family:var(--font-mono);
+}
+.link-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border)}
+.link-row:last-child{border-bottom:none;padding-bottom:0}
+.link-row a{color:var(--blue);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:6px;font-weight:500}
+.link-row a:hover{text-decoration:underline}
+.link-row span{font-size:11px;color:var(--muted)}
+
+.btn-primary{
+  width:100%;padding:11px;
+  background:var(--blue);
+  color:#fff;
+  border:none;border-radius:8px;
+  font-family:var(--font-sans);font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 2px 6px rgba(30,95,168,.3);
+}
+.btn-primary:hover{background:var(--blue2);box-shadow:0 4px 12px rgba(30,95,168,.35)}
+.btn-secondary{
+  width:100%;padding:11px;
+  background:none;
+  color:var(--muted);
+  border:1px solid var(--border);border-radius:8px;
+  font-family:var(--font-sans);font-size:13px;
+  cursor:pointer;transition:all .15s;margin-top:8px;
+}
+.btn-secondary:hover{border-color:var(--border2);color:var(--text);background:var(--bg3)}
+
+/* ── EMPTY STATE ── */
+.empty{padding:60px 20px;text-align:center;color:var(--muted);font-size:14px}
+.empty h3{font-family:var(--font-serif);font-size:22px;color:var(--text);margin-bottom:8px}
+
+/* ── FOOTER ── */
+footer{
+  padding:28px 32px;border-top:1px solid var(--border);
+  font-size:12px;color:var(--muted);
+  display:flex;gap:18px;align-items:center;flex-wrap:wrap;
+  position:relative;z-index:1;
+  background:var(--bg2);
+}
+footer a{color:var(--blue);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  header{padding:0 16px}
+  .hero,.filters,main,#global-progress,footer,.setup-banner{padding-left:16px;padding-right:16px}
+  .cards-grid{grid-template-columns:1fr}
+  .hero-stats{width:100%}
+  .stat{padding:12px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Pattern Recognition <span>for the rest of us</span></div>
+  <input type="text" id="search" placeholder="Search techniques…" oninput="filterCards()">
+  <div class="header-right">
+    <div id="progress-summary">Loading…</div>
+    <button class="btn-outline" onclick="resetProgress()">Reset</button>
+    <a href="https://github.com/ladataanalytics/pattern-recognition-notebooks" target="_blank" class="btn-outline">🐙 GitHub Repo</a>
+    <a href="https://www.linkedin.com/in/alfonsoberumen/" target="_blank" class="btn-outline" style="border-color:rgba(10,102,194,.3);color:#0a66c2" onmouseover="this.style.background='rgba(10,102,194,.08)'" onmouseout="this.style.background='none'">in Alfonso Berumen</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Pattern Recognition for the Rest of Us</div>
+  <h1>28 Techniques.<br><em>One place</em> to learn them <strong>all.</strong></h1>
+  <p>A non-linear ML learning hub built around techniques, not chapters. Content is modelled after <a href="https://intro-stat-learning.github.io/ISLP/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">ISLP</a> (Introduction to Statistical Learning with Python) for core ML methods, and <a href="https://otexts.com/fpppy/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">fpppy</a> (Forecasting: Principles &amp; Practice, Pythonic) for time series. Jump to any technique — each has a Colab notebook, exercises, and a quiz.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-val" id="stat-done">0</div><div class="stat-lbl">Completed</div></div>
+    <div class="stat"><div class="stat-val blue" id="stat-quiz">0</div><div class="stat-lbl">Quizzes passed</div></div>
+    <div class="stat"><div class="stat-val">29</div><div class="stat-lbl">Techniques</div></div>
+    <div class="stat"><div class="stat-val">8</div><div class="stat-lbl">Topic groups</div></div>
+  </div>
+</div>
+
+<!-- GITHUB SETUP BANNER -->
+<div class="setup-banner" style="margin:0 32px 8px">
+  <div class="setup-banner-header" onclick="toggleSetup()">
+    <div class="setup-banner-title">
+      🐙 How to access the notebooks — GitHub + Google Colab setup
+    </div>
+    <button class="setup-toggle" id="setup-toggle-btn">▼ Show steps</button>
+  </div>
+  <div class="setup-body" id="setup-body">
+    <div class="setup-steps">
+      <div class="setup-step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Create a GitHub account</strong> (free) at
+          <a href="https://github.com/join" target="_blank">github.com/join</a> if you don't have one.
+          GitHub stores your notebooks and tracks your work across devices.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Fork the course repo.</strong> Go to the repo link in the header and click <strong>Fork</strong> (top-right).
+          This creates your own private copy of all 28 notebooks under your GitHub account.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Open any notebook in Colab.</strong> Click the orange <strong>Open in Colab</strong> button on any card below.
+          Colab is Google's free Python environment — no install needed, free GPU included.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <strong>Work through the notebook.</strong> Run cells top-to-bottom with <code>Shift+Enter</code>.
+          Fill in <code># YOUR CODE HERE</code> sections and complete the quiz at the bottom.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">5</div>
+        <div class="step-text">
+          <strong>Save your work back to GitHub.</strong> In Colab: <strong>File → Save a copy in GitHub</strong>.
+          Choose your forked repo. Your work is now versioned and accessible anywhere.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">6</div>
+        <div class="step-text">
+          <strong>Track your progress here.</strong> Click any technique card → mark as complete or take the quiz.
+          Progress is saved in this browser. Come back any time — no login required for this page.
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;padding:11px 14px;background:rgba(30,95,168,.06);border:1px solid rgba(30,95,168,.15);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.65">
+      <strong style="color:var(--blue)">Need help?</strong>
+      First-time Colab users: go to <a href="https://colab.research.google.com" target="_blank">colab.research.google.com</a> and sign in with your Google account.
+      First-time GitHub users: the <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" target="_blank">GitHub fork guide</a> takes about 5 minutes.
+      You need a Google account for Colab and a GitHub account for saving — both are free.
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div id="global-progress">
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="prog-label" id="prog-label">0 of 28 techniques started</div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <button class="chip active" data-filter="all" onclick="setFilter('all',this)">All 29</button>
+  <button class="chip" data-filter="Foundations" onclick="setFilter('Foundations',this)">Foundations</button>
+  <button class="chip" data-filter="Regression" onclick="setFilter('Regression',this)">Regression</button>
+  <button class="chip" data-filter="Classification" onclick="setFilter('Classification',this)">Classification</button>
+  <button class="chip" data-filter="Tree Methods" onclick="setFilter('Tree Methods',this)">Tree Methods</button>
+  <button class="chip" data-filter="Unsupervised" onclick="setFilter('Unsupervised',this)">Unsupervised</button>
+  <button class="chip" data-filter="Deep Learning" onclick="setFilter('Deep Learning',this)">Deep Learning</button>
+  <button class="chip" data-filter="Advanced" onclick="setFilter('Advanced',this)">Advanced</button>
+  <button class="chip" data-filter="Time Series" onclick="setFilter('Time Series',this)">Time Series</button>
+  <button class="chip status" data-filter="done" onclick="setFilter('done',this)">✓ Completed</button>
+  <button class="chip status" data-filter="todo" onclick="setFilter('todo',this)">Not started</button>
+</div>
+
+<!-- MAIN GRID -->
+<main id="main-grid"></main>
+
+<!-- QUIZ MODAL -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>Pattern Recognition for the Rest of Us · Modelled after <strong>ISLP</strong> (James, Witten, Hastie & Tibshirani) and <strong>fpppy</strong> (Hyndman & Athanasopoulos)</span>
+  <a href="https://intro-stat-learning.github.io/ISLP/" target="_blank">ISLP docs & labs →</a>
+  <a href="https://www.statlearning.com" target="_blank">ISLP free PDF →</a>
+  <a href="https://otexts.com/fpppy/" target="_blank">fpppy (Time Series) →</a>
+  <a href="https://christophm.github.io/interpretable-ml-book/" target="_blank">IML book →</a>
+  <a href="https://www.linkedin.com/in/alfonsoberumen/" target="_blank" style="color:#0a66c2">Alfonso Berumen on LinkedIn →</a>
+  <span style="margin-left:auto;color:var(--muted)">Progress saved locally in your browser</span>
+</footer>
+
+<script>
+// ══════════════════════════════════════════
+// SETUP BANNER
+// ══════════════════════════════════════════
+function toggleSetup() {
+  const body = document.getElementById('setup-body');
+  const btn = document.getElementById('setup-toggle-btn');
+  const open = body.classList.toggle('open');
+  btn.textContent = open ? '▲ Hide steps' : '▼ Show steps';
+}
+
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+const GITHUB = 'https://github.com/ladataanalytics/pattern-recognition-notebooks';
+const COLAB_BASE = 'https://colab.research.google.com/github/ladataanalytics/pattern-recognition-notebooks/blob/main/notebooks';
+
+const TECHNIQUES = [
+  {id:'statistical-learning',title:'Statistical Learning',group:'Foundations',emoji:'📐',desc:'Supervised vs unsupervised, prediction vs inference, reducible vs irreducible error',islp:'ISLP Ch 2'},
+  {id:'bias-variance',title:'Bias-Variance Tradeoff',group:'Foundations',emoji:'⚖️',desc:'The fundamental tension between model flexibility and generalization',islp:'ISLP Ch 2'},
+  {id:'cross-validation',title:'Cross-Validation & Resampling',group:'Foundations',emoji:'🔁',desc:'Leave-one-out CV, k-fold CV, bootstrap — model selection without overfitting',islp:'ISLP Ch 5'},
+  {id:'eda-profiling',title:'EDA & Data Profiling',group:'Foundations',emoji:'🔍',desc:'ydata-profiling, missing data, distributions, correlation — before modeling',islp:'ISLP Supplement'},
+  {id:'bayesian-intro',title:'Bayesian Thinking',group:'Foundations',emoji:'🎯',desc:'Prior, likelihood, posterior, credible intervals vs confidence intervals',islp:'Extended'},
+  {id:'linear-regression',title:'Linear Regression',group:'Regression',emoji:'📈',desc:'OLS, RSE, R², F-statistic, confidence intervals, categorical predictors',islp:'ISLP Ch 3'},
+  {id:'regularization',title:'Ridge & Lasso',group:'Regression',emoji:'🎯',desc:'Shrinkage methods, L1 vs L2 penalties, bias-variance trade, cross-validated λ',islp:'ISLP Ch 6'},
+  {id:'subset-selection',title:'Subset & Model Selection',group:'Regression',emoji:'🗂️',desc:'Best subset, forward/backward stepwise, Cp, BIC, adjusted R²',islp:'ISLP Ch 6'},
+  {id:'beyond-linearity',title:'Beyond Linearity',group:'Regression',emoji:'〰️',desc:'Polynomial regression, step functions, splines, local regression, GAMs',islp:'ISLP Ch 7'},
+  {id:'logistic-regression',title:'Logistic Regression',group:'Classification',emoji:'🪢',desc:'Log-odds, sigmoid, MLE, confusion matrix, ROC/AUC, multinomial extension',islp:'ISLP Ch 4'},
+  {id:'lda-qda',title:'LDA & QDA',group:'Classification',emoji:'📦',desc:'Linear and quadratic discriminant analysis, Bayes classifier, decision boundaries',islp:'ISLP Ch 4'},
+  {id:'naive-bayes',title:'Naive Bayes',group:'Classification',emoji:'🧮',desc:'Conditional independence assumption, Gaussian NB, text classification use cases',islp:'ISLP Ch 4'},
+  {id:'knn',title:'K-Nearest Neighbors',group:'Classification',emoji:'📍',desc:'Distance-based classification, choosing K, curse of dimensionality',islp:'ISLP Ch 2–4'},
+  {id:'decision-trees',title:'Decision Trees',group:'Tree Methods',emoji:'🌳',desc:'Recursive binary splitting, Gini impurity, pruning, regression vs classification trees',islp:'ISLP Ch 8'},
+  {id:'random-forests',title:'Random Forests',group:'Tree Methods',emoji:'🌲',desc:'Bagging, random feature selection, OOB error, variable importance',islp:'ISLP Ch 8'},
+  {id:'boosting',title:'Boosting',group:'Tree Methods',emoji:'⚡',desc:'AdaBoost, gradient boosting, XGBoost intuition, shrinkage, tree depth',islp:'ISLP Ch 8'},
+  {id:'svm',title:'Support Vector Machines',group:'Tree Methods',emoji:'🔧',desc:'Maximal margin classifier, support vectors, kernels (RBF, poly), soft margin',islp:'ISLP Ch 9'},
+  {id:'pca',title:'PCA',group:'Unsupervised',emoji:'🧭',desc:'Variance maximization, loadings, scree plot, proportion of variance explained',islp:'ISLP Ch 12'},
+  {id:'kmeans',title:'K-Means Clustering',group:'Unsupervised',emoji:'🫧',desc:"Lloyd's algorithm, elbow method, silhouette score, initialization sensitivity",islp:'ISLP Ch 12'},
+  {id:'hierarchical-clustering',title:'Hierarchical Clustering',group:'Unsupervised',emoji:'🌿',desc:'Agglomerative clustering, linkage methods, dendrograms, cutting the tree',islp:'ISLP Ch 12'},
+  {id:'neural-networks',title:'Neural Networks & Deep Learning',group:'Deep Learning',emoji:'🧠',desc:'Forward pass, backprop, activations, dropout, CNNs and RNNs intuition',islp:'ISLP Ch 10'},
+  {id:'survival-analysis',title:'Survival Analysis',group:'Advanced',emoji:'⏱️',desc:'Censoring, Kaplan-Meier estimator, log-rank test, Cox proportional hazards',islp:'ISLP Ch 11'},
+  {id:'multiple-testing',title:'Multiple Testing',group:'Advanced',emoji:'🎲',desc:'FWER, Bonferroni correction, false discovery rate, Benjamini-Hochberg',islp:'ISLP Ch 13'},
+  {id:'model-explainability',title:'Model Explainability',group:'Advanced',emoji:'🔬',desc:'SHAP values, LIME, partial dependence plots — explain any model to any audience',islp:'Extended'},
+  {id:'lazypredict',title:'LazyPredict Benchmarking',group:'Advanced',emoji:'🏎️',desc:'Benchmark 30+ sklearn models in one call — rapid baseline comparison',islp:'Extended'},
+  {id:'h2o-automl',title:'H2O AutoML',group:'Advanced',emoji:'🤖',desc:'Automated model training, stacking, and built-in explainability (SHAP + variable importance) using H2O.ai — runs free in Colab',islp:'Extended'},
+  {id:'ts-foundations',title:'Time Series Foundations',group:'Time Series',emoji:'📅',desc:'Trend, seasonality, cycles, STL decomposition, ACF/PACF, time plots',islp:'fpppy Ch 1–3'},
+  {id:'ts-forecasting',title:'ETS & ARIMA Forecasting',group:'Time Series',emoji:'🔮',desc:'Naive baselines, Holt-Winters ETS, ARIMA, auto_arima, MAE/RMSE evaluation',islp:'fpppy Ch 7–9'},
+  {id:'ts-advanced',title:'Advanced Forecasting',group:'Time Series',emoji:'📡',desc:'Prophet, LSTM for sequences, cross-validation for time series, ensembles',islp:'fpppy Ch 10–12'},
+];
+
+// One 5-question quiz per technique (sampled — add more in the repo's quizzes/ folder)
+const QUIZZES = {
+  'bias-variance': [
+    {q:'As model flexibility increases, which error component typically decreases at first?',opts:['Irreducible error','Bias','Variance','Test MSE'],ans:1,exp:'Higher flexibility fits the training data more closely, reducing bias. But variance increases as the model becomes sensitive to training set fluctuations.'},
+    {q:'The irreducible error ε cannot be reduced by improving the model because:',opts:['It is always zero in practice','It comes from noise inherent in the data-generating process','It is caused by overfitting','It only exists in classification problems'],ans:1,exp:'Irreducible error arises from unmeasured factors and inherent noise in the relationship — no model can eliminate it.'},
+    {q:'A high-variance model tends to:',opts:['Underfit the training data','Perform similarly on training and test sets','Overfit — fitting noise in the training set','Have high bias'],ans:2,exp:'High variance means the model learned patterns specific to the training set, including noise, so it generalizes poorly.'},
+  ],
+  'cross-validation': [
+    {q:'Leave-one-out cross-validation (LOOCV) uses how many folds?',opts:['5','10','n (one per observation)','2'],ans:2,exp:'LOOCV trains on n-1 observations and tests on the held-out one, repeating n times. It has low bias but can have high variance and is computationally expensive.'},
+    {q:'Compared to LOOCV, k-fold CV (k=10) typically:',opts:['Has higher bias and higher variance','Has lower bias but much higher variance','Has slightly higher bias but lower variance and is faster','Produces identical results'],ans:2,exp:'k-fold CV uses larger test sets per fold, introducing slightly more bias — but the estimates are less variable and cheaper to compute than LOOCV.'},
+    {q:'The bootstrap is primarily used to:',opts:['Split data into train/test','Estimate the variability (standard error) of a statistic','Remove outliers','Increase training data size without cost'],ans:1,exp:'The bootstrap repeatedly samples with replacement from the dataset, fitting the model each time to estimate how much a statistic varies across different samples.'},
+  ],
+  'linear-regression': [
+    {q:'In simple linear regression, the OLS estimators minimize which quantity?',opts:['Sum of absolute residuals','Sum of squared residuals (RSS)','R-squared','Mean absolute error'],ans:1,exp:'OLS (Ordinary Least Squares) finds the line that minimizes the residual sum of squares: Σ(yᵢ - ŷᵢ)².'},
+    {q:'R² = 0.82 means:',opts:['82% of predictions are correct','The model has 82% accuracy','82% of the variance in Y is explained by X','The model is overfitting by 18%'],ans:2,exp:'R² measures the proportion of total variance in Y explained by the model. R²=0.82 means 82% of Y\'s variability is captured — 18% remains unexplained.'},
+    {q:'A p-value of 0.003 for a coefficient β₁ tells us:',opts:['β₁ is practically large','The coefficient is statistically significant — we reject H₀: β₁=0','β₁ explains 0.3% of the variance','The model fits well overall'],ans:1,exp:'A p-value < 0.05 (or your chosen α) means we have strong evidence against H₀: β₁=0 — the predictor has a statistically detectable relationship with Y.'},
+  ],
+  'random-forests': [
+    {q:'What distinguishes Random Forests from simple bagging?',opts:['Random Forests use more trees','Each tree uses a random subset of features at each split','Random Forests prune trees aggressively','Random Forests only work for classification'],ans:1,exp:'Bagging grows full trees on bootstrap samples. Random Forests add the key twist of considering only a random subset of m features at each split, decorrelating the trees and reducing variance.'},
+    {q:'Out-of-bag (OOB) error is:',opts:['The training error on the full dataset','Test error estimated from samples not used to grow each tree','The error on a separate validation set','The error after pruning'],ans:1,exp:'Each bootstrap sample leaves out ~37% of observations. OOB error uses these left-out observations as a natural validation set, giving a free estimate of test error without needing CV.'},
+  ],
+  'logistic-regression': [
+    {q:'Logistic regression models P(Y=1|X) using which function?',opts:['Linear','Sigmoid (logistic)','ReLU','Softmax'],ans:1,exp:'The sigmoid function σ(x) = 1/(1+e^(-x)) maps any linear combination of predictors to a probability between 0 and 1.'},
+    {q:'The log-odds (logit) in logistic regression is:',opts:['log(P)','log(P/(1-P))','P/(1-P)','log(1-P)'],ans:1,exp:'The logit is the natural log of the odds ratio: log(P/(1-P)). This is what the linear predictor β₀ + β₁X models — it ranges from -∞ to +∞.'},
+    {q:'AUC-ROC of 0.5 means:',opts:['The model is perfect','The model performs no better than random guessing','The model has 50% accuracy','The model is heavily overfitting'],ans:1,exp:'AUC=0.5 corresponds to a random classifier (diagonal ROC curve). AUC=1.0 is perfect; AUC<0.5 suggests the model is worse than chance.'},
+  ],
+  'pca': [
+    {q:'The first principal component captures:',opts:['The most frequently occurring direction','The direction of maximum variance in the data','The dimension with the fewest outliers','The direction orthogonal to the most variance'],ans:1,exp:'PC1 is the linear combination of variables with the highest variance. Each subsequent PC captures the most remaining variance while being orthogonal to all previous PCs.'},
+    {q:'PCA loadings tell you:',opts:['The proportion of variance explained by each PC','How much each original variable contributes to each principal component','The correlation between PCs','The number of clusters in the data'],ans:1,exp:'Loadings are the coefficients of each original variable in the linear combination defining a PC. Large absolute loadings indicate that variable strongly influences that PC.'},
+  ],
+  'svm': [
+    {q:'The "support vectors" in an SVM are:',opts:['All training observations','Only the observations closest to the decision boundary','Observations with zero weight','The observations with the largest margin'],ans:1,exp:'Support vectors are the training points that lie on or within the margin. The decision boundary is determined entirely by these points — removing other observations does not change the model.'},
+    {q:'A kernel in SVM allows the algorithm to:',opts:['Run faster on large datasets','Find nonlinear decision boundaries by implicitly mapping to higher dimensions','Reduce the number of support vectors','Avoid cross-validation'],ans:1,exp:'Kernel tricks compute dot products in a high-dimensional feature space without explicitly transforming the data, enabling nonlinear classifiers at low computational cost.'},
+  ],
+  'ts-foundations': [
+    {q:'STL decomposition separates a time series into:',opts:['Mean, variance, autocorrelation','Trend, seasonality, and remainder (residual)','Past, present, and future','Signal, noise, and drift'],ans:1,exp:'STL (Seasonal and Trend decomposition using Loess) robustly extracts the trend-cycle, seasonal component, and the remainder left over after both are removed.'},
+    {q:'A time series is called stationary if:',opts:['It has no trend','Its statistical properties (mean, variance, autocorrelation) do not change over time','It repeats every 12 months','It has no outliers'],ans:1,exp:'Stationarity means the process has a constant mean, constant variance, and autocorrelation that depends only on the lag — not on when you measure it. ARIMA requires stationarity after differencing.'},
+  ],
+  'lazypredict': [
+    {q:'LazyPredict fits many models without tuning. What is its primary use case?',opts:['Production deployment','Getting a quick baseline benchmark across many algorithms','Hyperparameter optimization','Feature engineering'],ans:1,exp:'LazyPredict is a rapid exploration tool — it tells you which model families are worth investing tuning time in, not which model to deploy.'},
+    {q:'If LazyPredict shows RandomForest at the top but GradientBoosting close behind, what should you do next?',opts:['Deploy RandomForest immediately','Tune both with cross-validation and compare properly','Switch to a neural network','Report LazyPredict scores as final results'],ans:1,exp:'LazyPredict uses default hyperparameters and no CV — treat its output as a shortlist for deeper evaluation, not final results.'},
+  ],
+  'h2o-automl': [
+    {q:'What does H2O AutoML do automatically that you would otherwise do manually?',opts:['Collects more training data','Trains multiple model types, tunes hyperparameters, and builds a stacked ensemble','Deploys models to production','Writes the feature engineering code'],ans:1,exp:'H2O AutoML trains GBMs, Random Forests, Deep Learning, GLMs, and XGBoost variants, then stacks the best ones into an ensemble — all with one function call.'},
+    {q:"H2O's built-in explain() method produces which outputs?",opts:['Only a confusion matrix','SHAP values, variable importance, partial dependence plots, and SHAP summary plots','Only variable importance','A single accuracy score'],ans:1,exp:'h2o_model.explain() generates a full explainability report including SHAP contributions, PDP plots, and variable importance — making it a natural complement to the Model Explainability technique.'},
+    {q:'Why does H2O AutoML often outperform a single well-tuned model?',opts:['It uses more training data','It runs on faster hardware','It builds a stacked ensemble combining diverse model types','It uses a larger learning rate'],ans:2,exp:'Stacking combines the strengths of different model families. When GBM captures one pattern and GLM another, a meta-learner trained on their outputs can outperform either alone.'},
+  ],
+};
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let progress = JSON.parse(localStorage.getItem('pr_progress') || '{}');
+let currentFilter = 'all';
+let currentSearch = '';
+let activeModal = null;
+
+function save() { localStorage.setItem('pr_progress', JSON.stringify(progress)); }
+
+function markDone(id) {
+  if (!progress[id]) progress[id] = {};
+  progress[id].done = true;
+  save(); renderAll();
+}
+
+function markUndone(id) {
+  if (progress[id]) progress[id].done = false;
+  save(); renderAll();
+}
+
+function saveQuizResult(id, score, total) {
+  if (!progress[id]) progress[id] = {};
+  progress[id].quizScore = Math.max(progress[id].quizScore || 0, score);
+  progress[id].quizTotal = total;
+  progress[id].quizAttempts = (progress[id].quizAttempts || 0) + 1;
+  save(); renderAll();
+}
+
+function resetProgress() {
+  if (!confirm('Reset all progress? This cannot be undone.')) return;
+  progress = {}; save(); renderAll();
+}
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+const GROUP_ACCENTS = {
+  'Foundations':'#1e5fa8',
+  'Regression':'#e85d20',
+  'Classification':'#6b46c1',
+  'Tree Methods':'#1a7a45',
+  'Unsupervised':'#c44010',
+  'Deep Learning':'#c0392b',
+  'Advanced':'#0e7490',
+  'Time Series':'#166534',
+};
+
+function renderAll() {
+  updateStats();
+  renderGrid();
+}
+
+function updateStats() {
+  const done = Object.values(progress).filter(p => p.done).length;
+  const quizPassed = Object.values(progress).filter(p => p.quizScore >= 2).length;
+  const started = Object.keys(progress).length;
+
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-quiz').textContent = quizPassed;
+  document.getElementById('prog-fill').style.width = Math.round(started / 28 * 100) + '%';
+  document.getElementById('prog-label').textContent = `${started} of 28 techniques started · ${done} completed · ${quizPassed} quizzes passed`;
+  document.getElementById('progress-summary').innerHTML = `<strong>${done}/28</strong> done`;
+}
+
+function filteredTechniques() {
+  return TECHNIQUES.filter(t => {
+    const matchesFilter =
+      currentFilter === 'all' ? true :
+      currentFilter === 'done' ? !!progress[t.id]?.done :
+      currentFilter === 'todo' ? !progress[t.id]?.done :
+      t.group === currentFilter;
+    const q = currentSearch.toLowerCase();
+    const matchesSearch = !q || t.title.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.group.toLowerCase().includes(q) || t.islp.toLowerCase().includes(q);
+    return matchesFilter && matchesSearch;
+  });
+}
+
+function renderGrid() {
+  const grid = document.getElementById('main-grid');
+  const visible = filteredTechniques();
+  grid.innerHTML = '';
+
+  if (!visible.length) {
+    grid.innerHTML = `<div class="empty"><h3>No techniques found</h3><p>Try a different filter or search term.</p></div>`;
+    return;
+  }
+
+  // Group by group
+  const groups = {};
+  visible.forEach(t => {
+    if (!groups[t.group]) groups[t.group] = [];
+    groups[t.group].push(t);
+  });
+
+  const groupOrder = ['Foundations','Regression','Classification','Tree Methods','Unsupervised','Deep Learning','Advanced','Time Series'];
+  groupOrder.forEach(g => {
+    if (!groups[g]) return;
+    const section = document.createElement('div');
+    section.className = 'section';
+    section.innerHTML = `<div class="section-header">
+      <h2 class="section-title" style="color:${GROUP_ACCENTS[g]}">${g}</h2>
+      <span class="section-count">${groups[g].length}</span>
+    </div>
+    <div class="cards-grid" id="grid-${g.replace(/\s/g,'_')}"></div>`;
+    grid.appendChild(section);
+    const cardGrid = section.querySelector('.cards-grid');
+    groups[g].forEach(t => cardGrid.appendChild(makeCard(t)));
+  });
+}
+
+function makeCard(t) {
+  const p = progress[t.id] || {};
+  const isDone = !!p.done;
+  const hasQuiz = !!QUIZZES[t.id];
+  const quizPassed = p.quizScore >= 2;
+  const accent = GROUP_ACCENTS[t.group];
+
+  const card = document.createElement('div');
+  card.className = 'card' + (isDone ? ' done' : p.quizAttempts ? ' in-progress' : '');
+  card.style.setProperty('--card-accent', accent);
+  card.onclick = () => openModal(t.id);
+
+  const badgeClass = t.islp.startsWith('fpppy') ? 'badge-fpppy' : t.islp === 'Extended' ? 'badge-ext' : 'badge-islp';
+  const badges = [
+    `<span class="badge ${badgeClass}">${t.islp}</span>`,
+    isDone ? `<span class="badge badge-done">✓ done</span>` : '',
+    quizPassed ? `<span class="badge badge-quiz">quiz ✓</span>` : (hasQuiz ? `<span class="badge badge-new">quiz</span>` : ''),
+  ].filter(Boolean).join('');
+
+  const colabUrl = `${COLAB_BASE}/${t.id}.ipynb`;
+  const ghUrl = `${GITHUB}/blob/main/notebooks/${t.id}.ipynb`;
+
+  card.innerHTML = `
+    <div class="card-top">
+      <span class="card-emoji">${t.emoji}</span>
+      <div class="card-badges">${badges}</div>
+    </div>
+    <div class="card-title">${t.title}</div>
+    <div class="card-desc">${t.desc}</div>
+    <div class="card-footer">
+      <div class="card-links" onclick="event.stopPropagation()">
+        <a class="card-link colab" href="${colabUrl}" target="_blank">Open in Colab</a>
+        <a class="card-link" href="${ghUrl}" target="_blank">GitHub</a>
+      </div>
+      <span>${p.quizScore ? `${p.quizScore}/${p.quizTotal} quiz` : ''}</span>
+    </div>`;
+  return card;
+}
+
+// ══════════════════════════════════════════
+// FILTER & SEARCH
+// ══════════════════════════════════════════
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid();
+}
+
+function filterCards() {
+  currentSearch = document.getElementById('search').value;
+  renderGrid();
+}
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+function openModal(id) {
+  const t = TECHNIQUES.find(x => x.id === id);
+  if (!t) return;
+  activeModal = id;
+  const p = progress[id] || {};
+  const q = QUIZZES[id];
+  const colabUrl = `${COLAB_BASE}/${id}.ipynb`;
+  const ghUrl = `${GITHUB}/blob/main/notebooks/${id}.ipynb`;
+  const accent = GROUP_ACCENTS[t.group];
+
+  let quizHTML = '';
+  if (q) {
+    const dots = q.map((_,i) => {
+      const r = p.quizAnswers?.[i];
+      return `<span class="score-dot ${r===true?'hit':r===false?'miss':''}"></span>`;
+    }).join('');
+    quizHTML = `
+    <div class="quiz-section">
+      <div class="quiz-label">Quick quiz · ${q.length} questions</div>
+      ${p.quizScore !== undefined ? `<div class="quiz-score-bar"><div class="score-dots">${dots}</div><span>Best score: ${p.quizScore}/${p.quizTotal}</span></div>` : ''}
+      <div id="quiz-questions"></div>
+    </div>`;
+  }
+
+  const sourceLabel = t.islp.startsWith('fpppy')
+    ? `<a href="https://otexts.com/fpppy/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">${t.islp} — Forecasting: Principles & Practice (Pythonic)</a>`
+    : t.islp.startsWith('ISLP')
+    ? `<a href="https://intro-stat-learning.github.io/ISLP/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">${t.islp} — Introduction to Statistical Learning with Python</a>`
+    : `<span style="color:var(--muted)">${t.islp}</span>`;
+
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-title" style="color:${accent}">${t.emoji} ${t.title}</div>
+    <div class="modal-subtitle">${t.group} · ${sourceLabel}</div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:20px">${t.desc}</p>
+
+    <div class="links-section">
+      <h4>Open in</h4>
+      <div class="link-row"><a href="${colabUrl}" target="_blank">📓 Google Colab</a><span>Run interactively, free GPU</span></div>
+      <div class="link-row"><a href="${ghUrl}" target="_blank">🐙 GitHub</a><span>View notebook source</span></div>
+    </div>
+
+    ${quizHTML}
+
+    <button class="btn-primary" onclick="${p.done ? `markUndone('${id}')` : `markDone('${id}')`}; closeModal()">
+      ${p.done ? '↩ Mark as not done' : '✓ Mark as complete'}
+    </button>
+    <button class="btn-secondary" onclick="closeModal()">Close</button>
+  `;
+
+  if (q) renderQuiz(id, q, 0, []);
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// Quiz state — avoids JSON serialization inside onclick attributes
+const quizState = { id: null, questions: [], qIndex: 0, answers: [] };
+
+function renderQuiz(id, questions, qIndex, answers) {
+  // Store in module state so onclick handlers can reference it safely
+  quizState.id = id;
+  quizState.questions = questions;
+  quizState.qIndex = qIndex;
+  quizState.answers = answers;
+
+  if (qIndex >= questions.length) {
+    const score = answers.filter(Boolean).length;
+    saveQuizResult(id, score, questions.length);
+    const qDiv = document.getElementById('quiz-questions');
+    if (!qDiv) return;
+    const color = score === questions.length ? 'var(--green)' : score >= questions.length / 2 ? 'var(--accent)' : 'var(--red)';    const msg = score === questions.length ? 'Perfect! All correct.' : score >= questions.length / 2 ? 'Good work — review any you missed.' : 'Keep reviewing — try again after re-reading the technique.';
+    qDiv.innerHTML = `<div style="text-align:center;padding:20px 0">
+      <div style="font-size:36px;font-family:var(--font-serif);color:${color}">${score}/${questions.length}</div>
+      <div style="font-size:13px;color:var(--muted);margin:8px 0 16px">${msg}</div>
+      <button class="btn-secondary" style="width:auto;padding:8px 20px" onclick="renderQuiz(quizState.id, quizState.questions, 0, [])">Try again</button>
+    </div>`;
+    return;
+  }
+
+  const qq = questions[qIndex];
+  const qDiv = document.getElementById('quiz-questions');
+  if (!qDiv) return;
+  const optsHTML = qq.opts.map((o, i) =>
+    `<button class="quiz-opt" onclick="answerQuiz(${i})">${o}</button>`
+  ).join('');
+  qDiv.innerHTML = `
+    <div class="quiz-q"><strong>Q${qIndex + 1}/${questions.length}:</strong> ${qq.q}</div>
+    <div class="quiz-opts">${optsHTML}</div>
+    <div class="quiz-feedback" id="qfb"></div>
+  `;
+}
+
+function answerQuiz(chosen) {
+  const { id, questions, qIndex, answers } = quizState;
+  const qq = questions[qIndex];
+  const correct = chosen === qq.ans;
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (i === qq.ans) o.classList.add('correct');
+    else if (i === chosen && !correct) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('qfb');
+  fb.className = 'quiz-feedback show ' + (correct ? 'ok' : 'no');
+  fb.textContent = (correct ? '✓ ' : '✗ ') + qq.exp;
+  const newAnswers = [...answers, correct];
+  quizState.answers = newAnswers;
+  quizState.qIndex = qIndex + 1;
+  setTimeout(() => renderQuiz(id, questions, qIndex + 1, newAnswers), 2200);
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  activeModal = null;
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+renderAll();
+</script>
+</body>
+</html>
