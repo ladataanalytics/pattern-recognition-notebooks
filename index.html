@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pattern Recognition for the Rest of Us</title>
+<title>Data Data Pattern Recognition for the Rest of Us</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ── LIGHT THEME (default) ── */
 :root {
   --bg: #f5f6f8;
   --bg2: #ffffff;
@@ -32,7 +33,53 @@
   --r-sm: 6px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
   --shadow-md: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+  --header-bg: rgba(255,255,255,.96);
+  --filter-bg: rgba(245,246,248,.96);
 }
+
+/* ── DARK THEME ── */
+[data-theme="dark"] {
+  --bg: #0f1117;
+  --bg2: #1a1d27;
+  --bg3: #22263a;
+  --surface: #2a2f42;
+  --border: #2e3347;
+  --border2: #404666;
+  --text: #e8eaf0;
+  --muted: #8b91a8;
+  --accent: #f0722a;
+  --accent2: #d45c18;
+  --blue: #5b9cf6;
+  --blue2: #4a8ae8;
+  --blue-light: rgba(91,156,246,.12);
+  --green: #4ade80;
+  --green-light: rgba(74,222,128,.1);
+  --red: #f87171;
+  --purple: #a78bfa;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.4), 0 2px 4px rgba(0,0,0,.3);
+  --header-bg: rgba(15,17,23,.96);
+  --filter-bg: rgba(15,17,23,.96);
+}
+
+/* ── DARK MODE TRANSITIONS ── */
+body, header, .card, #modal, .setup-banner, .filters, footer {
+  transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+}
+
+/* ── DARK MODE TOGGLE BUTTON ── */
+.dark-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.dark-toggle:hover { background: var(--surface); transform: scale(1.1); }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -56,7 +103,7 @@ body::before{
 /* ── HEADER ── */
 header{
   position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.96);
+  background:var(--header-bg);
   backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
   padding:0 32px;
@@ -203,7 +250,7 @@ header{
 /* ── FILTER CHIPS ── */
 .filters{
   position:sticky;top:60px;z-index:90;
-  background:rgba(245,246,248,.96);
+  background:var(--filter-bg);
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--border);
   padding:10px 32px;
@@ -487,17 +534,21 @@ footer a:hover{text-decoration:underline}
 <header>
   <div class="logo">Pattern Recognition <span>for the rest of us</span></div>
   <input type="text" id="search" placeholder="Search techniques…" oninput="filterCards()">
+  <div class="logo">Data Pattern Recognition <span>for the rest of us</span></div>
+  <input type="text" id="search" placeholder="Search techniques…" oninput="filterCards()">
   <div class="header-right">
     <div id="progress-summary">Loading…</div>
+    <button onclick="showStartHere()" class="btn-outline" style="border-color:var(--accent);color:var(--accent)">🚀 Start Here</button>
     <button class="btn-outline" onclick="resetProgress()">Reset</button>
     <a href="https://github.com/ladataanalytics/pattern-recognition-notebooks" target="_blank" class="btn-outline">🐙 GitHub Repo</a>
-    <a href="https://www.linkedin.com/in/alfonsoberumen/" target="_blank" class="btn-outline" style="border-color:rgba(10,102,194,.3);color:#0a66c2" onmouseover="this.style.background='rgba(10,102,194,.08)'" onmouseout="this.style.background='none'">in Alfonso Berumen</a>
+    <a href="https://www.linkedin.com/in/alfonsoberumen/" target="_blank" class="btn-outline" style="border-color:rgba(10,102,194,.3);color:#0a66c2">in Alfonso Berumen</a>
+    <button class="dark-toggle" onclick="toggleDark()" id="dark-btn" title="Toggle dark mode">🌙</button>
   </div>
 </header>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-eyebrow">Pattern Recognition for the Rest of Us</div>
+  <div class="hero-eyebrow">Data Data Pattern Recognition for the Rest of Us</div>
   <h1>30 Techniques.<br><em>One place</em> to learn them <strong>all.</strong></h1>
   <p>A non-linear ML learning hub built around techniques, not chapters. Content is modelled after <a href="https://intro-stat-learning.github.io/ISLP/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">ISLP</a> (Introduction to Statistical Learning with Python) for core ML methods, and <a href="https://otexts.com/fpppy/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">fpppy</a> (Forecasting: Principles &amp; Practice, Pythonic) for time series. Jump to any technique — each has a Colab notebook, exercises, and a quiz.</p>
   <div class="hero-stats">
@@ -596,6 +647,253 @@ footer a:hover{text-decoration:underline}
 <!-- MAIN GRID -->
 <main id="main-grid"></main>
 
+<!-- ═══ START HERE MODAL ═══ -->
+<div id="starthere-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:20px;overflow-y:auto">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:720px;margin:auto;box-shadow:0 24px 64px rgba(0,0,0,.25)">
+    <div style="padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:14px">
+      <div style="font-size:32px">🚀</div>
+      <div style="flex:1">
+        <div style="font-family:var(--font-serif);font-size:22px;color:var(--text)">Start Here — Your Learning Path</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:3px">Recommended sequence for getting the most out of this course</div>
+      </div>
+      <button onclick="document.getElementById('starthere-overlay').style.display='none';document.body.style.overflow=''" style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--muted);font-family:var(--font-sans);font-size:13px">✕</button>
+    </div>
+    <div style="padding:24px 28px">
+
+      <!-- Path cards -->
+      <div style="display:grid;gap:14px">
+
+        <!-- Track 1 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <span style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 1</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text)">Coming from Excel / Spreadsheets</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">You know how to sort, filter, and build pivot tables. You've heard of Python but never used it. Start here.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📊 Excel → Python Bridge</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔍 EDA & Profiling</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📐 Statistical Learning</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📈 Linear Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🌳 Decision Trees</span>
+          </div>
+        </div>
+
+        <!-- Track 2 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:10px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <span style="background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 2</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text)">Foundations First (Recommended Order)</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">Some Python experience. Work through ISLP in the intended order for the strongest conceptual foundation.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">1. Statistical Learning</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">2. Bias-Variance</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">3. Linear Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">4. Logistic Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">5. Cross-Validation</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">6. Random Forests</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">7. Boosting</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">8. PCA</span>
+          </div>
+        </div>
+
+        <!-- Track 3 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--green);border-radius:10px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <span style="background:var(--green);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 3</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text)">Business Analytics Focus</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">You work in analytics, consulting, or a business role. Focus on interpretable models and communicating results.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔍 EDA</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📈 Linear Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🪢 Logistic Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🌳 Decision Trees</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔢 Count Models</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔬 Explainability</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📅 Time Series</span>
+          </div>
+        </div>
+
+        <!-- Track 4 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:10px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <span style="background:var(--purple);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 4</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text)">Jump to a Specific Technique</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7">You know what you need. Use the search bar or topic filters below to jump directly to any of the 30 techniques. Each notebook is self-contained — no prior notebooks required.</div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:20px;padding:14px 16px;background:var(--blue-light);border:1px solid rgba(30,95,168,.2);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.7">
+        <strong style="color:var(--blue)">💡 How long does this take?</strong>
+        Each technique notebook takes 45–75 minutes. The full 30-technique curriculum is roughly 40 hours of active learning — designed to be done one or two techniques per week alongside a course or self-study.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SPREADSHEET BRIDGE SECTION ═══ -->
+<div id="bridge-section" style="padding:0 32px 16px;position:relative;z-index:1">
+  <div style="background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+    <div style="padding:20px 24px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none" onclick="toggleBridge()">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px">📊</span>
+        <div>
+          <div style="font-family:var(--font-serif);font-size:18px;color:var(--text)">Excel & Sheets → Python Bridge</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Coming from spreadsheets? Start here — every skill you already have maps directly to Python</div>
+        </div>
+      </div>
+      <button id="bridge-toggle-btn" style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--muted);cursor:pointer;font-family:var(--font-sans)">▼ Show</button>
+    </div>
+
+    <div id="bridge-body" style="display:none;padding:0 24px 24px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:20px">
+
+        <!-- Concept map cards -->
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <div style="background:var(--blue);padding:10px 14px;font-size:12px;font-weight:600;color:#fff">Data Structures</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Excel Spreadsheet</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--blue)">pandas DataFrame</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Single column</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--blue)">pandas Series</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Cell reference (A2)</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--blue)">df.iloc[1, 0]</td>
+            </tr>
+            <tr>
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Named range</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--blue)">df['column']</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <div style="background:var(--accent);padding:10px 14px;font-size:12px;font-weight:600;color:#fff">Common Operations</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Filter rows</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--accent)">df[df['col'] > 5]</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Sort by column</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--accent)">df.sort_values('col')</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Pivot table</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--accent)">df.pivot_table()</td>
+            </tr>
+            <tr>
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">VLOOKUP</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--accent)">df.merge()</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <div style="background:var(--green);padding:10px 14px;font-size:12px;font-weight:600;color:#fff">Formulas → Functions</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">SUM / AVERAGE</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--green)">.sum() / .mean()</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">COUNTIF</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--green)">df['col'].value_counts()</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">IF / IFS</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--green)">np.where() / .map()</td>
+            </tr>
+            <tr>
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Charts</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--green)">matplotlib / seaborn</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <div style="background:var(--purple);padding:10px 14px;font-size:12px;font-weight:600;color:#fff">Analysis Tasks</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Descriptive stats</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--purple)">df.describe()</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Remove duplicates</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--purple)">df.drop_duplicates()</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Find blanks</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--purple)">df.isnull().sum()</td>
+            </tr>
+            <tr>
+              <td style="padding:9px 14px;color:var(--muted);font-weight:500">Trendline / Forecast</td>
+              <td style="padding:9px 14px;color:var(--text)">→</td>
+              <td style="padding:9px 14px;font-family:var(--font-mono);color:var(--purple)">LinearRegression()</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Starter notebook CTA -->
+      <div style="background:var(--blue-light);border:1px solid rgba(30,95,168,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px">
+          <div style="font-size:13px;font-weight:600;color:var(--blue);margin-bottom:4px">📓 Your First Python Notebook</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6">Open the EDA & Data Profiling notebook — it loads a real dataset, runs the exact operations in the table above, and generates a full report in one line. Best first notebook for spreadsheet users.</div>
+        </div>
+        <a href="https://colab.research.google.com/github/ladataanalytics/pattern-recognition-notebooks/blob/main/notebooks/eda-profiling.ipynb"
+           target="_blank"
+           style="padding:10px 20px;background:var(--blue);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgba(30,95,168,.3)">
+          Open in Colab →
+        </a>
+      </div>
+
+      <!-- Why Python over Excel -->
+      <div style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+        <div style="padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:12px">
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">⚡ Scale</div>
+          <div style="color:var(--muted)">Excel struggles above ~100k rows. Python handles millions without breaking a sweat.</div>
+        </div>
+        <div style="padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:12px">
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">🔁 Reproducibility</div>
+          <div style="color:var(--muted)">Code is the documentation. Every step is recorded, rerunnable, and shareable via GitHub.</div>
+        </div>
+        <div style="padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:12px">
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">🤖 ML Access</div>
+          <div style="color:var(--muted)">All 30 techniques in this course require Python. Excel has no equivalent for Random Forests or SHAP.</div>
+        </div>
+        <div style="padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:12px">
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">🆓 Free forever</div>
+          <div style="color:var(--muted)">Python, Colab, and all libraries used in this course are completely free. No license fees.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- QUIZ MODAL -->
 <div id="modal-overlay" onclick="closeModal(event)">
   <div id="modal">
@@ -606,7 +904,7 @@ footer a:hover{text-decoration:underline}
 
 <!-- FOOTER -->
 <footer>
-  <span>Pattern Recognition for the Rest of Us · Modelled after <strong>ISLP</strong> (James, Witten, Hastie & Tibshirani) and <strong>fpppy</strong> (Hyndman & Athanasopoulos)</span>
+  <span>Data Data Pattern Recognition for the Rest of Us · Modelled after <strong>ISLP</strong> (James, Witten, Hastie & Tibshirani) and <strong>fpppy</strong> (Hyndman & Athanasopoulos)</span>
   <a href="https://intro-stat-learning.github.io/ISLP/" target="_blank">ISLP docs & labs →</a>
   <a href="https://www.statlearning.com" target="_blank">ISLP free PDF →</a>
   <a href="https://otexts.com/fpppy/" target="_blank">fpppy (Time Series) →</a>
@@ -623,7 +921,7 @@ footer a:hover{text-decoration:underline}
     <div style="padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
       <div>
         <div style="font-family:var(--font-serif);font-size:22px;color:var(--text)">📊 Instructor Dashboard</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px">Pattern Recognition for the Rest of Us · Live quiz & completion tracking</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">Data Pattern Recognition for the Rest of Us · Live quiz & completion tracking</div>
       </div>
       <button onclick="closeDashboard()" style="margin-left:auto;background:none;border:1px solid var(--border);border-radius:6px;padding:6px 10px;cursor:pointer;color:var(--muted);font-family:var(--font-sans);font-size:13px">✕ Close</button>
     </div>
@@ -769,6 +1067,53 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <script>
+// ══════════════════════════════════════════
+// DARK MODE
+// ══════════════════════════════════════════
+function toggleDark() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('dark-btn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('pr_theme', isDark ? 'light' : 'dark');
+}
+
+// Apply saved theme on load
+(function initTheme() {
+  const saved = localStorage.getItem('pr_theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('dark-btn');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+})();
+
+// ══════════════════════════════════════════
+// SPREADSHEET BRIDGE TOGGLE
+// ══════════════════════════════════════════
+function toggleBridge() {
+  const body = document.getElementById('bridge-body');
+  const btn  = document.getElementById('bridge-toggle-btn');
+  const open = body.style.display === 'block';
+  body.style.display = open ? 'none' : 'block';
+  btn.textContent = open ? '▼ Show' : '▲ Hide';
+}
+
+// ══════════════════════════════════════════
+// START HERE MODAL
+// ══════════════════════════════════════════
+function showStartHere() {
+  document.getElementById('starthere-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('starthere-overlay').addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+});
+
 // ══════════════════════════════════════════
 // SETUP BANNER
 // ══════════════════════════════════════════
