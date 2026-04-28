@@ -498,7 +498,7 @@ footer a:hover{text-decoration:underline}
 <!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow">Pattern Recognition for the Rest of Us</div>
-  <h1>28 Techniques.<br><em>One place</em> to learn them <strong>all.</strong></h1>
+  <h1>29 Techniques.<br><em>One place</em> to learn them <strong>all.</strong></h1>
   <p>A non-linear ML learning hub built around techniques, not chapters. Content is modelled after <a href="https://intro-stat-learning.github.io/ISLP/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">ISLP</a> (Introduction to Statistical Learning with Python) for core ML methods, and <a href="https://otexts.com/fpppy/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">fpppy</a> (Forecasting: Principles &amp; Practice, Pythonic) for time series. Jump to any technique — each has a Colab notebook, exercises, and a quiz.</p>
   <div class="hero-stats">
     <div class="stat"><div class="stat-val" id="stat-done">0</div><div class="stat-lbl">Completed</div></div>
@@ -530,7 +530,7 @@ footer a:hover{text-decoration:underline}
         <div class="step-num">2</div>
         <div class="step-text">
           <strong>Fork the course repo.</strong> Go to the repo link in the header and click <strong>Fork</strong> (top-right).
-          This creates your own private copy of all 28 notebooks under your GitHub account.
+          This creates your own private copy of all 29 notebooks under your GitHub account.
         </div>
       </div>
       <div class="setup-step">
@@ -574,7 +574,7 @@ footer a:hover{text-decoration:underline}
 <!-- PROGRESS -->
 <div id="global-progress">
   <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
-  <div class="prog-label" id="prog-label">0 of 28 techniques started</div>
+  <div class="prog-label" id="prog-label">0 of 29 techniques started</div>
 </div>
 
 <!-- FILTERS -->
@@ -590,6 +590,7 @@ footer a:hover{text-decoration:underline}
   <button class="chip" data-filter="Time Series" onclick="setFilter('Time Series',this)">Time Series</button>
   <button class="chip status" data-filter="done" onclick="setFilter('done',this)">✓ Completed</button>
   <button class="chip status" data-filter="todo" onclick="setFilter('todo',this)">Not started</button>
+  <button class="chip" data-filter="__dashboard__" onclick="showDashboard()" id="chip-dashboard" style="background:var(--blue);color:#fff;border-color:var(--blue);margin-left:auto">📊 Instructor Dashboard</button>
 </div>
 
 <!-- MAIN GRID -->
@@ -613,6 +614,159 @@ footer a:hover{text-decoration:underline}
   <a href="https://www.linkedin.com/in/alfonsoberumen/" target="_blank" style="color:#0a66c2">Alfonso Berumen on LinkedIn →</a>
   <span style="margin-left:auto;color:var(--muted)">Progress saved locally in your browser</span>
 </footer>
+
+<!-- ═══ INSTRUCTOR DASHBOARD MODAL ═══ -->
+<div id="dashboard-overlay" style="display:none;position:fixed;inset:0;background:rgba(20,25,35,.6);backdrop-filter:blur(4px);z-index:300;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;width:100%;max-width:980px;margin:0 auto;box-shadow:0 20px 60px rgba(0,0,0,.18);position:relative">
+
+    <!-- Header -->
+    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <div>
+        <div style="font-family:var(--font-serif);font-size:22px;color:var(--text)">📊 Instructor Dashboard</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">Pattern Recognition for the Rest of Us · Live quiz & completion tracking</div>
+      </div>
+      <button onclick="closeDashboard()" style="margin-left:auto;background:none;border:1px solid var(--border);border-radius:6px;padding:6px 10px;cursor:pointer;color:var(--muted);font-family:var(--font-sans);font-size:13px">✕ Close</button>
+    </div>
+
+    <!-- Setup instructions (shown until Sheet URL is configured) -->
+    <div id="dash-setup" style="padding:24px">
+      <div style="background:var(--blue-light);border:1px solid rgba(30,95,168,.2);border-radius:10px;padding:18px 20px;margin-bottom:20px">
+        <div style="font-size:13px;font-weight:600;color:var(--blue);margin-bottom:10px">🔧 One-time setup — takes about 5 minutes</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.9">
+          Student quiz submissions flow into a <strong>Google Sheet you own</strong>. Here's how to set it up:
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px">
+          <div style="font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Step 1 — Create Google Form</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.75">
+            Go to <a href="https://forms.google.com" target="_blank" style="color:var(--blue)">forms.google.com</a> → Blank form.<br>
+            Add these fields exactly:<br>
+            <code style="background:var(--bg2);padding:1px 5px;border-radius:3px;font-size:11px">1. GitHub Username</code> (Short answer)<br>
+            <code style="background:var(--bg2);padding:1px 5px;border-radius:3px;font-size:11px">2. Notebook</code> (Short answer)<br>
+            <code style="background:var(--bg2);padding:1px 5px;border-radius:3px;font-size:11px">3. Score</code> (Short answer)<br>
+            <code style="background:var(--bg2);padding:1px 5px;border-radius:3px;font-size:11px">4. Total Questions</code> (Short answer)<br>
+            <code style="background:var(--bg2);padding:1px 5px;border-radius:3px;font-size:11px">5. Answers JSON</code> (Paragraph)
+          </div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px">
+          <div style="font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Step 2 — Link to Google Sheet</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.75">
+            In the Form editor → <strong>Responses tab</strong> → click the Sheets icon (Link to Sheets) → Create new spreadsheet.<br><br>
+            In the Sheet → <strong>Share</strong> → <em>Anyone with the link can view</em>.<br><br>
+            Copy the Sheet URL and paste it below.
+          </div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px">
+          <div style="font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Step 3 — Get Form Entry IDs</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.75">
+            Open your form → click <strong>⋮ → Get pre-filled link</strong>.<br>
+            Fill in dummy values, click <strong>Get link</strong>.<br>
+            The URL will look like:<br>
+            <code style="background:var(--bg2);padding:2px 5px;border-radius:3px;font-size:10px;word-break:break-all">…?entry.123456789=username&entry.987654321=notebook…</code><br><br>
+            Copy the <code>entry.XXXXXXX</code> IDs for each field and paste below.
+          </div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px">
+          <div style="font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Step 4 — Share with students</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.75">
+            Once configured, the quiz cells in every notebook will show a <strong>"Submit to instructor"</strong> button.<br><br>
+            Students click it → Google Form opens pre-filled → one click to submit.<br><br>
+            You see results here in real time.
+          </div>
+        </div>
+      </div>
+
+      <!-- Config form -->
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px 20px">
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:14px">Configure your Google Form & Sheet</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Google Form base URL (ends in /viewform)</label>
+            <input id="cfg-form-url" type="text" placeholder="https://docs.google.com/forms/d/e/XXXXX/viewform"
+              style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font-sans);background:var(--bg2)">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Google Sheet JSON URL</label>
+            <input id="cfg-sheet-url" type="text" placeholder="https://docs.google.com/spreadsheets/d/XXXXX/gviz/tq?tqx=out:json"
+              style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font-sans);background:var(--bg2)">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Entry ID — GitHub Username (e.g. entry.123456789)</label>
+            <input id="cfg-entry-user" type="text" placeholder="entry.XXXXXXXXX"
+              style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font-mono);background:var(--bg2)">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Entry ID — Notebook</label>
+            <input id="cfg-entry-notebook" type="text" placeholder="entry.XXXXXXXXX"
+              style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font-mono);background:var(--bg2)">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Entry ID — Score</label>
+            <input id="cfg-entry-score" type="text" placeholder="entry.XXXXXXXXX"
+              style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font-mono);background:var(--bg2)">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Entry ID — Total Questions</label>
+            <input id="cfg-entry-total" type="text" placeholder="entry.XXXXXXXXX"
+              style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font-mono);background:var(--bg2)">
+          </div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+          <button onclick="saveDashConfig()" style="padding:9px 20px;background:var(--blue);color:#fff;border:none;border-radius:7px;font-family:var(--font-sans);font-size:13px;font-weight:600;cursor:pointer">Save configuration</button>
+          <button onclick="loadDashboard()" style="padding:9px 20px;background:none;border:1px solid var(--border);border-radius:7px;font-family:var(--font-sans);font-size:13px;color:var(--muted);cursor:pointer">Load dashboard →</button>
+          <span id="cfg-status" style="font-size:12px;color:var(--green)"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard view (shown after config) -->
+    <div id="dash-view" style="display:none;padding:24px">
+
+      <!-- Summary stats -->
+      <div id="dash-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px"></div>
+
+      <!-- Student table -->
+      <div style="margin-bottom:20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:600;color:var(--text)">Student Quiz Results</div>
+          <div style="display:flex;gap:8px">
+            <input id="dash-search" type="text" placeholder="Filter by student or notebook…"
+              oninput="filterDashboard()"
+              style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font-sans);background:var(--bg3);width:220px">
+            <button onclick="loadDashboard()" style="padding:6px 12px;background:var(--blue-light);border:1px solid rgba(30,95,168,.2);border-radius:6px;font-size:12px;color:var(--blue);cursor:pointer;font-family:var(--font-sans)">↻ Refresh</button>
+            <button onclick="exportCSV()" style="padding:6px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--muted);cursor:pointer;font-family:var(--font-sans)">⬇ Export CSV</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table id="dash-table" style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+              <tr style="background:var(--bg3);border-bottom:2px solid var(--border)">
+                <th onclick="sortTable('student')" style="padding:9px 12px;text-align:left;cursor:pointer;font-weight:600;color:var(--muted);font-family:var(--font-mono);font-size:11px;white-space:nowrap">STUDENT ↕</th>
+                <th onclick="sortTable('notebook')" style="padding:9px 12px;text-align:left;cursor:pointer;font-weight:600;color:var(--muted);font-family:var(--font-mono);font-size:11px">NOTEBOOK ↕</th>
+                <th onclick="sortTable('score')" style="padding:9px 12px;text-align:center;cursor:pointer;font-weight:600;color:var(--muted);font-family:var(--font-mono);font-size:11px">SCORE ↕</th>
+                <th onclick="sortTable('pct')" style="padding:9px 12px;text-align:center;cursor:pointer;font-weight:600;color:var(--muted);font-family:var(--font-mono);font-size:11px">% ↕</th>
+                <th style="padding:9px 12px;text-align:left;font-weight:600;color:var(--muted);font-family:var(--font-mono);font-size:11px">TIMESTAMP</th>
+              </tr>
+            </thead>
+            <tbody id="dash-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Per-student completion heatmap -->
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px">Coverage Heatmap — who attempted which topics</div>
+        <div id="dash-heatmap" style="overflow-x:auto"></div>
+      </div>
+
+      <div style="margin-top:16px;text-align:right">
+        <button onclick="showDashSetup()" style="font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font-sans)">⚙ Edit configuration</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 // ══════════════════════════════════════════
@@ -772,8 +926,8 @@ function updateStats() {
 
   document.getElementById('stat-done').textContent = done;
   document.getElementById('stat-quiz').textContent = quizPassed;
-  document.getElementById('prog-fill').style.width = Math.round(started / 28 * 100) + '%';
-  document.getElementById('prog-label').textContent = `${started} of 28 techniques started · ${done} completed · ${quizPassed} quizzes passed`;
+  document.getElementById('prog-fill').style.width = Math.round(started / 29 * 100) + '%';
+  document.getElementById('prog-label').textContent = `${started} of 29 techniques started · ${done} completed · ${quizPassed} quizzes passed`;
   document.getElementById('progress-summary').innerHTML = `<strong>${done}/28</strong> done`;
 }
 
@@ -999,7 +1153,248 @@ function closeModal(e) {
 }
 
 // ══════════════════════════════════════════
+// INSTRUCTOR DASHBOARD
+// ══════════════════════════════════════════
+const DASH_CFG_KEY = 'pr_dash_config';
+let dashData = [];
+let dashSortCol = 'timestamp';
+let dashSortDir = -1;
+
+function getDashConfig() {
+  try { return JSON.parse(localStorage.getItem(DASH_CFG_KEY) || '{}'); } catch { return {}; }
+}
+
+function showDashboard() {
+  document.getElementById('dashboard-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  const cfg = getDashConfig();
+  // Pre-fill inputs if config exists
+  if (cfg.formUrl)       document.getElementById('cfg-form-url').value       = cfg.formUrl;
+  if (cfg.sheetUrl)      document.getElementById('cfg-sheet-url').value      = cfg.sheetUrl;
+  if (cfg.entryUser)     document.getElementById('cfg-entry-user').value     = cfg.entryUser;
+  if (cfg.entryNotebook) document.getElementById('cfg-entry-notebook').value = cfg.entryNotebook;
+  if (cfg.entryScore)    document.getElementById('cfg-entry-score').value    = cfg.entryScore;
+  if (cfg.entryTotal)    document.getElementById('cfg-entry-total').value    = cfg.entryTotal;
+  // If already configured, show dashboard directly
+  if (cfg.sheetUrl && cfg.formUrl) {
+    document.getElementById('dash-setup').style.display = 'none';
+    document.getElementById('dash-view').style.display  = 'block';
+    loadDashboard();
+  }
+}
+
+function closeDashboard() {
+  document.getElementById('dashboard-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function showDashSetup() {
+  document.getElementById('dash-setup').style.display = 'block';
+  document.getElementById('dash-view').style.display  = 'none';
+}
+
+function saveDashConfig() {
+  const cfg = {
+    formUrl:       document.getElementById('cfg-form-url').value.trim(),
+    sheetUrl:      document.getElementById('cfg-sheet-url').value.trim(),
+    entryUser:     document.getElementById('cfg-entry-user').value.trim(),
+    entryNotebook: document.getElementById('cfg-entry-notebook').value.trim(),
+    entryScore:    document.getElementById('cfg-entry-score').value.trim(),
+    entryTotal:    document.getElementById('cfg-entry-total').value.trim(),
+  };
+  if (!cfg.formUrl || !cfg.sheetUrl) {
+    document.getElementById('cfg-status').textContent = '⚠ Form URL and Sheet URL are required';
+    document.getElementById('cfg-status').style.color = 'var(--red)';
+    return;
+  }
+  localStorage.setItem(DASH_CFG_KEY, JSON.stringify(cfg));
+  document.getElementById('cfg-status').textContent = '✓ Saved!';
+  document.getElementById('cfg-status').style.color = 'var(--green)';
+  setTimeout(() => document.getElementById('cfg-status').textContent = '', 2000);
+}
+
+async function loadDashboard() {
+  const cfg = getDashConfig();
+  if (!cfg.sheetUrl) {
+    alert('Configure your Google Sheet URL first.');
+    return;
+  }
+
+  const tbody = document.getElementById('dash-tbody');
+  tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:var(--muted)">Loading submissions…</td></tr>';
+  document.getElementById('dash-setup').style.display = 'none';
+  document.getElementById('dash-view').style.display  = 'block';
+
+  try {
+    // Google Sheets public JSON feed
+    const url = cfg.sheetUrl.includes('gviz')
+      ? cfg.sheetUrl
+      : cfg.sheetUrl.replace('/edit', '/gviz/tq?tqx=out:json');
+
+    const resp = await fetch(url);
+    const text = await resp.text();
+    // Google wraps JSON in /*O_o*/google.visualization.Query.setResponse({...});
+    const json = JSON.parse(text.replace(/^[^{]+/, '').replace(/[^}]+$/, ''));
+    const rows = json.table.rows || [];
+    const cols = json.table.cols.map(c => c.label);
+
+    // Parse rows — columns: Timestamp, GitHub Username, Notebook, Score, Total Questions, Answers JSON
+    dashData = rows.map(r => {
+      const vals = r.c.map(c => c ? (c.v || c.f || '') : '');
+      return {
+        timestamp: vals[0] || '',
+        student:   (vals[1] || '').trim().toLowerCase(),
+        notebook:  (vals[2] || '').trim(),
+        score:     parseInt(vals[3]) || 0,
+        total:     parseInt(vals[4]) || 5,
+        answers:   vals[5] || '',
+        pct:       Math.round((parseInt(vals[3])||0) / (parseInt(vals[4])||5) * 100),
+      };
+    }).filter(r => r.student);
+
+    renderDashStats();
+    renderDashTable(dashData);
+    renderHeatmap(dashData);
+
+  } catch(e) {
+    tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:var(--red)">
+      Could not load sheet data. Check that the Sheet is shared publicly (Anyone with link → Viewer).<br>
+      <small style="color:var(--muted)">${e.message}</small>
+    </td></tr>`;
+  }
+}
+
+function renderDashStats() {
+  const students  = [...new Set(dashData.map(r => r.student))];
+  const notebooks = [...new Set(dashData.map(r => r.notebook))];
+  const avgPct    = dashData.length ? Math.round(dashData.reduce((s,r) => s+r.pct, 0) / dashData.length) : 0;
+  const passing   = dashData.filter(r => r.pct >= 60).length;
+
+  const stats = [
+    { val: students.length,  lbl: 'Students active',   color: 'var(--blue)' },
+    { val: dashData.length,  lbl: 'Quiz submissions',  color: 'var(--accent)' },
+    { val: avgPct + '%',     lbl: 'Avg quiz score',    color: avgPct >= 70 ? 'var(--green)' : 'var(--red)' },
+    { val: notebooks.length, lbl: 'Notebooks attempted', color: 'var(--purple)' },
+  ];
+
+  document.getElementById('dash-stats').innerHTML = stats.map(s => `
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font-family:var(--font-mono);font-size:26px;font-weight:500;color:${s.color}">${s.val}</div>
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:3px">${s.lbl}</div>
+    </div>`).join('');
+}
+
+function renderDashTable(data) {
+  const tbody = document.getElementById('dash-tbody');
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:var(--muted)">No submissions yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map((r, i) => {
+    const pctColor = r.pct >= 80 ? 'var(--green)' : r.pct >= 60 ? 'var(--accent)' : 'var(--red)';
+    const pctBg    = r.pct >= 80 ? 'var(--green-light)' : r.pct >= 60 ? 'rgba(232,93,32,.08)' : 'rgba(192,57,43,.07)';
+    return `<tr style="border-bottom:1px solid var(--border);${i%2===0?'':'background:var(--bg3)'}">
+      <td style="padding:9px 12px;font-family:var(--font-mono);font-size:11px;color:var(--blue)">@${r.student}</td>
+      <td style="padding:9px 12px;font-size:12px;color:var(--text)">${r.notebook}</td>
+      <td style="padding:9px 12px;text-align:center;font-family:var(--font-mono);font-size:12px">${r.score}/${r.total}</td>
+      <td style="padding:9px 12px;text-align:center">
+        <span style="padding:3px 8px;border-radius:12px;font-family:var(--font-mono);font-size:11px;font-weight:600;color:${pctColor};background:${pctBg}">${r.pct}%</span>
+      </td>
+      <td style="padding:9px 12px;font-size:11px;color:var(--muted)">${r.timestamp}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderHeatmap(data) {
+  const students  = [...new Set(data.map(r => r.student))].sort();
+  const notebooks = [...new Set(data.map(r => r.notebook))].sort();
+  if (!students.length) return;
+
+  // Build lookup: student → notebook → best score %
+  const lookup = {};
+  data.forEach(r => {
+    if (!lookup[r.student]) lookup[r.student] = {};
+    const prev = lookup[r.student][r.notebook] || 0;
+    lookup[r.student][r.notebook] = Math.max(prev, r.pct);
+  });
+
+  const cellSize = 28;
+  const labelW   = 110;
+  const headerH  = 120;
+  const svgW     = labelW + notebooks.length * cellSize + 10;
+  const svgH     = headerH + students.length * cellSize + 10;
+
+  let svg = `<svg width="${svgW}" height="${svgH}" xmlns="http://www.w3.org/2000/svg" style="font-family:var(--font-sans)">`;
+
+  // Column headers (rotated notebook names)
+  notebooks.forEach((nb, j) => {
+    const x = labelW + j * cellSize + cellSize/2;
+    const short = nb.replace(/-/g,' ').replace('foundations','fnd').substring(0,14);
+    svg += `<text x="${x}" y="${headerH-5}" text-anchor="start" font-size="10" fill="#5c6270"
+      transform="rotate(-55 ${x} ${headerH-5})">${short}</text>`;
+  });
+
+  // Rows
+  students.forEach((student, i) => {
+    const y = headerH + i * cellSize;
+    svg += `<text x="${labelW-6}" y="${y+18}" text-anchor="end" font-size="11" fill="#1e5fa8" font-family="monospace">@${student}</text>`;
+    notebooks.forEach((nb, j) => {
+      const x   = labelW + j * cellSize;
+      const pct = lookup[student]?.[nb];
+      const fill = pct === undefined ? '#eef0f3'
+                 : pct >= 80 ? '#c6f0d8'
+                 : pct >= 60 ? '#fde8d4'
+                 : '#fbd5d5';
+      const txt  = pct !== undefined ? pct + '%' : '';
+      const tColor = pct === undefined ? '#d0d0d0'
+                   : pct >= 80 ? '#1a7a45'
+                   : pct >= 60 ? '#c44010'
+                   : '#c0392b';
+      svg += `<rect x="${x+1}" y="${y+1}" width="${cellSize-2}" height="${cellSize-2}" rx="3" fill="${fill}" stroke="#d8dbe0" stroke-width="0.5"/>`;
+      if (txt) svg += `<text x="${x+cellSize/2}" y="${y+17}" text-anchor="middle" font-size="9" fill="${tColor}" font-weight="600">${txt}</text>`;
+    });
+  });
+
+  svg += `</svg>`;
+  document.getElementById('dash-heatmap').innerHTML = svg;
+}
+
+function filterDashboard() {
+  const q = document.getElementById('dash-search').value.toLowerCase();
+  const filtered = q ? dashData.filter(r => r.student.includes(q) || r.notebook.toLowerCase().includes(q)) : dashData;
+  renderDashTable(filtered);
+}
+
+function sortTable(col) {
+  if (dashSortCol === col) dashSortDir *= -1;
+  else { dashSortCol = col; dashSortDir = -1; }
+  const sorted = [...dashData].sort((a,b) => {
+    const av = a[col], bv = b[col];
+    if (typeof av === 'number') return (av - bv) * dashSortDir;
+    return String(av).localeCompare(String(bv)) * dashSortDir;
+  });
+  renderDashTable(sorted);
+}
+
+function exportCSV() {
+  const headers = ['Timestamp','Student','Notebook','Score','Total','Pct%'];
+  const rows = dashData.map(r => [r.timestamp, r.student, r.notebook, r.score, r.total, r.pct]);
+  const csv  = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = `quiz_results_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+}
+
+// Close dashboard on overlay click
+document.getElementById('dashboard-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeDashboard();
+});
+
+// ══════════════════════════════════════════
 // INIT
+// ══════════════════════════════════════════
 // ══════════════════════════════════════════
 renderAll();
 </script>
