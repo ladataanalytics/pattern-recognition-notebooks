@@ -557,182 +557,6 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
-<!-- GITHUB SETUP BANNER -->
-<div class="setup-banner" style="margin:0 32px 8px">
-  <div class="setup-banner-header" onclick="toggleSetup()">
-    <div class="setup-banner-title">
-      🐙 How to access the notebooks — GitHub + Google Colab setup
-    </div>
-    <button class="setup-toggle" id="setup-toggle-btn">▼ Show steps</button>
-  </div>
-  <div class="setup-body" id="setup-body">
-    <div class="setup-steps">
-      <div class="setup-step">
-        <div class="step-num">1</div>
-        <div class="step-text">
-          <strong>Create a GitHub account</strong> (free) at
-          <a href="https://github.com/join" target="_blank">github.com/join</a> if you don't have one.
-          GitHub stores your notebooks and tracks your work across devices.
-        </div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">2</div>
-        <div class="step-text">
-          <strong>Fork the course repo.</strong> Go to the repo link in the header and click <strong>Fork</strong> (top-right).
-          This creates your own private copy of all 30 notebooks under your GitHub account.
-        </div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">3</div>
-        <div class="step-text">
-          <strong>Open any notebook in Colab.</strong> Click the orange <strong>Open in Colab</strong> button on any card below.
-          Colab is Google's free Python environment — no install needed, free GPU included.
-        </div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">4</div>
-        <div class="step-text">
-          <strong>Work through the notebook.</strong> Run cells top-to-bottom with <code>Shift+Enter</code>.
-          Fill in <code># YOUR CODE HERE</code> sections and complete the quiz at the bottom.
-        </div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">5</div>
-        <div class="step-text">
-          <strong>Save your work back to GitHub.</strong> In Colab: <strong>File → Save a copy in GitHub</strong>.
-          Choose your forked repo. Your work is now versioned and accessible anywhere.
-        </div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">6</div>
-        <div class="step-text">
-          <strong>Track your progress here.</strong> Click any technique card → mark as complete or take the quiz.
-          Progress is saved in this browser. Come back any time — no login required for this page.
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:14px;padding:11px 14px;background:rgba(30,95,168,.06);border:1px solid rgba(30,95,168,.15);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.65">
-      <strong style="color:var(--blue)">Need help?</strong>
-      First-time Colab users: go to <a href="https://colab.research.google.com" target="_blank">colab.research.google.com</a> and sign in with your Google account.
-      First-time GitHub users: the <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" target="_blank">GitHub fork guide</a> takes about 5 minutes.
-      You need a Google account for Colab and a GitHub account for saving — both are free.
-    </div>
-  </div>
-</div>
-
-<!-- PROGRESS -->
-<div id="global-progress">
-  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
-  <div class="prog-label" id="prog-label">0 of 30 techniques started</div>
-</div>
-
-<!-- FILTERS -->
-<div class="filters">
-  <button class="chip active" data-filter="all" onclick="setFilter('all',this)">All 30</button>
-  <button class="chip" data-filter="Foundations" onclick="setFilter('Foundations',this)">Foundations</button>
-  <button class="chip" data-filter="Regression" onclick="setFilter('Regression',this)">Regression</button>
-  <button class="chip" data-filter="Classification" onclick="setFilter('Classification',this)">Classification</button>
-  <button class="chip" data-filter="Tree Methods" onclick="setFilter('Tree Methods',this)">Tree Methods</button>
-  <button class="chip" data-filter="Unsupervised" onclick="setFilter('Unsupervised',this)">Unsupervised</button>
-  <button class="chip" data-filter="Deep Learning" onclick="setFilter('Deep Learning',this)">Deep Learning</button>
-  <button class="chip" data-filter="Advanced" onclick="setFilter('Advanced',this)">Advanced</button>
-  <button class="chip" data-filter="Time Series" onclick="setFilter('Time Series',this)">Time Series</button>
-  <button class="chip status" data-filter="done" onclick="setFilter('done',this)">✓ Completed</button>
-  <button class="chip status" data-filter="todo" onclick="setFilter('todo',this)">Not started</button>
-  <button class="chip" data-filter="__dashboard__" onclick="showDashboard()" id="chip-dashboard" style="background:var(--blue);color:#fff;border-color:var(--blue);margin-left:auto">📊 Instructor Dashboard</button>
-</div>
-
-<!-- MAIN GRID -->
-<main id="main-grid"></main>
-
-<!-- ═══ START HERE MODAL ═══ -->
-<div id="starthere-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:20px;overflow-y:auto">
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:720px;margin:auto;box-shadow:0 24px 64px rgba(0,0,0,.25)">
-    <div style="padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:14px">
-      <div style="font-size:32px">🚀</div>
-      <div style="flex:1">
-        <div style="font-family:var(--font-serif);font-size:22px;color:var(--text)">Start Here — Your Learning Path</div>
-        <div style="font-size:13px;color:var(--muted);margin-top:3px">Recommended sequence for getting the most out of this course</div>
-      </div>
-      <button onclick="document.getElementById('starthere-overlay').style.display='none';document.body.style.overflow=''" style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--muted);font-family:var(--font-sans);font-size:13px">✕</button>
-    </div>
-    <div style="padding:24px 28px">
-
-      <!-- Path cards -->
-      <div style="display:grid;gap:14px">
-
-        <!-- Track 1 -->
-        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <span style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 1</span>
-            <span style="font-size:14px;font-weight:600;color:var(--text)">Coming from Excel / Spreadsheets</span>
-          </div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">You know how to sort, filter, and build pivot tables. You've heard of Python but never used it. Start here.</div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px">
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📊 Excel → Python Bridge</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔍 EDA & Profiling</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📐 Statistical Learning</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📈 Linear Regression</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🌳 Decision Trees</span>
-          </div>
-        </div>
-
-        <!-- Track 2 -->
-        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:10px;padding:16px 18px">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <span style="background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 2</span>
-            <span style="font-size:14px;font-weight:600;color:var(--text)">Foundations First (Recommended Order)</span>
-          </div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">Some Python experience. Work through ISLP in the intended order for the strongest conceptual foundation.</div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px">
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">1. Statistical Learning</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">2. Bias-Variance</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">3. Linear Regression</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">4. Logistic Regression</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">5. Cross-Validation</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">6. Random Forests</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">7. Boosting</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">8. PCA</span>
-          </div>
-        </div>
-
-        <!-- Track 3 -->
-        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--green);border-radius:10px;padding:16px 18px">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <span style="background:var(--green);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 3</span>
-            <span style="font-size:14px;font-weight:600;color:var(--text)">Business Analytics Focus</span>
-          </div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">You work in analytics, consulting, or a business role. Focus on interpretable models and communicating results.</div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px">
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔍 EDA</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📈 Linear Regression</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🪢 Logistic Regression</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🌳 Decision Trees</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔢 Count Models</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔬 Explainability</span>
-            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📅 Time Series</span>
-          </div>
-        </div>
-
-        <!-- Track 4 -->
-        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:10px;padding:16px 18px">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <span style="background:var(--purple);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 4</span>
-            <span style="font-size:14px;font-weight:600;color:var(--text)">Jump to a Specific Technique</span>
-          </div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7">You know what you need. Use the search bar or topic filters below to jump directly to any of the 30 techniques. Each notebook is self-contained — no prior notebooks required.</div>
-        </div>
-
-      </div>
-
-      <div style="margin-top:20px;padding:14px 16px;background:var(--blue-light);border:1px solid rgba(30,95,168,.2);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.7">
-        <strong style="color:var(--blue)">💡 How long does this take?</strong>
-        Each technique notebook takes 45–75 minutes. The full 30-technique curriculum is roughly 40 hours of active learning — designed to be done one or two techniques per week alongside a course or self-study.
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ═══ SPREADSHEET BRIDGE SECTION ═══ -->
 <div id="bridge-section" style="padding:0 32px 16px;position:relative;z-index:1">
   <div style="background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border:1px solid var(--border);border-radius:14px;overflow:hidden">
@@ -1059,6 +883,188 @@ footer a:hover{text-decoration:underline}
 
       <div style="margin-top:16px;text-align:right">
         <button onclick="showDashSetup()" style="font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font-sans)">⚙ Edit configuration</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GITHUB SETUP BANNER -->
+<div class="setup-banner" style="margin:0 32px 8px">
+  <div class="setup-banner-header" onclick="toggleSetup()">
+    <div class="setup-banner-title">
+      🐙 How to access the notebooks — GitHub + Google Colab setup
+    </div>
+    <button class="setup-toggle" id="setup-toggle-btn">▼ Show steps</button>
+  </div>
+  <div class="setup-body" id="setup-body">
+    <div class="setup-steps">
+      <div class="setup-step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Create a GitHub account</strong> (free) at
+          <a href="https://github.com/join" target="_blank">github.com/join</a> if you don't have one.
+          GitHub stores your notebooks and tracks your work across devices.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Fork the course repo.</strong> Go to the repo link in the header and click <strong>Fork</strong> (top-right).
+          This creates your own private copy of all 30 notebooks under your GitHub account.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Open any notebook in Colab.</strong> Click the orange <strong>Open in Colab</strong> button on any card below.
+          Colab is Google's free Python environment — no install needed, free GPU included.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <strong>Work through the notebook.</strong> Run cells top-to-bottom with <code>Shift+Enter</code>.
+          Fill in <code># YOUR CODE HERE</code> sections and complete the quiz at the bottom.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">5</div>
+        <div class="step-text">
+          <strong>Save your work back to GitHub.</strong> In Colab: <strong>File → Save a copy in GitHub</strong>.
+          Choose your forked repo. Your work is now versioned and accessible anywhere.
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">6</div>
+        <div class="step-text">
+          <strong>Track your progress here.</strong> Click any technique card → mark as complete or take the quiz.
+          Progress is saved in this browser. Come back any time — no login required for this page.
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;padding:11px 14px;background:rgba(30,95,168,.06);border:1px solid rgba(30,95,168,.15);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.65">
+      <strong style="color:var(--blue)">Need help?</strong>
+      First-time Colab users: go to <a href="https://colab.research.google.com" target="_blank">colab.research.google.com</a> and sign in with your Google account.
+      First-time GitHub users: the <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" target="_blank">GitHub fork guide</a> takes about 5 minutes.
+      You need a Google account for Colab and a GitHub account for saving — both are free.
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div id="global-progress">
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="prog-label" id="prog-label">0 of 30 techniques started</div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <button class="chip active" data-filter="all" onclick="setFilter('all',this)">All 30</button>
+  <button class="chip" data-filter="Foundations" onclick="setFilter('Foundations',this)">Foundations</button>
+  <button class="chip" data-filter="Regression" onclick="setFilter('Regression',this)">Regression</button>
+  <button class="chip" data-filter="Classification" onclick="setFilter('Classification',this)">Classification</button>
+  <button class="chip" data-filter="Tree Methods" onclick="setFilter('Tree Methods',this)">Tree Methods</button>
+  <button class="chip" data-filter="Unsupervised" onclick="setFilter('Unsupervised',this)">Unsupervised</button>
+  <button class="chip" data-filter="Deep Learning" onclick="setFilter('Deep Learning',this)">Deep Learning</button>
+  <button class="chip" data-filter="Advanced" onclick="setFilter('Advanced',this)">Advanced</button>
+  <button class="chip" data-filter="Time Series" onclick="setFilter('Time Series',this)">Time Series</button>
+  <button class="chip status" data-filter="done" onclick="setFilter('done',this)">✓ Completed</button>
+  <button class="chip status" data-filter="todo" onclick="setFilter('todo',this)">Not started</button>
+  <button class="chip" data-filter="__dashboard__" onclick="showDashboard()" id="chip-dashboard" style="background:var(--blue);color:#fff;border-color:var(--blue);margin-left:auto">📊 Instructor Dashboard</button>
+</div>
+
+<!-- MAIN GRID -->
+<main id="main-grid"></main>
+
+<!-- QUIZ MODAL -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- ═══ START HERE MODAL ═══ -->
+<div id="starthere-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:20px;overflow-y:auto">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:720px;margin:auto;box-shadow:0 24px 64px rgba(0,0,0,.25)">
+    <div style="padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:14px">
+      <div style="font-size:32px">🚀</div>
+      <div style="flex:1">
+        <div style="font-family:var(--font-serif);font-size:22px;color:var(--text)">Start Here — Your Learning Path</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:3px">Recommended sequence for getting the most out of this course</div>
+      </div>
+      <button onclick="document.getElementById('starthere-overlay').style.display='none';document.body.style.overflow=''" style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--muted);font-family:var(--font-sans);font-size:13px">✕</button>
+    </div>
+    <div style="padding:24px 28px">      <!-- Path cards -->
+      <div style="display:grid;gap:14px">
+
+        <!-- Track 1 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <span style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 1</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text)">Coming from Excel / Spreadsheets</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">You know how to sort, filter, and build pivot tables. You've heard of Python but never used it. Start here.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📊 Excel → Python Bridge</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔍 EDA & Profiling</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📐 Statistical Learning</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📈 Linear Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🌳 Decision Trees</span>
+          </div>
+        </div>
+
+        <!-- Track 2 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:10px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <span style="background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 2</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text)">Foundations First (Recommended Order)</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">Some Python experience. Work through ISLP in the intended order for the strongest conceptual foundation.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">1. Statistical Learning</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">2. Bias-Variance</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">3. Linear Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">4. Logistic Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">5. Cross-Validation</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">6. Random Forests</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">7. Boosting</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">8. PCA</span>
+          </div>
+        </div>
+
+        <!-- Track 3 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--green);border-radius:10px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <span style="background:var(--green);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 3</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text)">Business Analytics Focus</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">You work in analytics, consulting, or a business role. Focus on interpretable models and communicating results.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔍 EDA</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📈 Linear Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🪢 Logistic Regression</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🌳 Decision Trees</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔢 Count Models</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">🔬 Explainability</span>
+            <span style="font-size:11px;padding:3px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:var(--font-mono)">📅 Time Series</span>
+          </div>
+        </div>
+
+        <!-- Track 4 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:10px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <span style="background:var(--purple);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 4</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text)">Jump to a Specific Technique</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7">You know what you need. Use the search bar or topic filters below to jump directly to any of the 30 techniques. Each notebook is self-contained — no prior notebooks required.</div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:20px;padding:14px 16px;background:var(--blue-light);border:1px solid rgba(30,95,168,.2);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.7">
+        <strong style="color:var(--blue)">💡 How long does this take?</strong>
+        Each technique notebook takes 45–75 minutes. The full 30-technique curriculum is roughly 40 hours of active learning — designed to be done one or two techniques per week alongside a course or self-study.
       </div>
     </div>
   </div>
