@@ -111,11 +111,30 @@ Every notebook follows the same format:
 
 ## For instructors
 
-- **Assign notebooks** by sharing a Colab badge link directly with students
-- **Students fork the repo** to maintain their own copy with saved work
-- **Track progress** via the built-in instructor dashboard on the navigator (📊 button) — requires a one-time Google Form setup
+### Tracking students
+
+Each submission is identified by the student's `GITHUB_USERNAME`. To match usernames to real names, **collect GitHub usernames on day one** — add this question to your intake form, syllabus quiz, or first-day survey:
+
+> *"What is your GitHub username? (github.com → click your avatar → 'Your profile' — the username appears under your name)"*
+
+Keep a simple roster: `GitHub username → Full name → Email`. This is the only administrative step required. Once you have it, every graded submission maps directly to a student.
+
+### Setup checklist
+
+- **Day 1:** Collect GitHub usernames from all students (see above)
+- **Students fork the repo** → they get their own copy of all 30 notebooks
+- **Students get a free Gemini API key** at aistudio.google.com using their **personal Gmail** — many universities block AI Studio on managed accounts, so students must use a personal @gmail.com account
+- **Students add the key** to Colab Secrets (🔑 icon in left sidebar) once — it persists across all notebooks
+- **Students set `GITHUB_USERNAME`** at the bottom of each notebook before submitting
 - **Datasets are bundled** in `data/` — no internet required inside notebooks
 - **Customize quizzes** by editing the quiz cells at the bottom of any notebook
+
+### What the AI grades
+
+Every notebook has an AI grading cell at the bottom powered by Gemini 2.0 Flash (free):
+- **Quiz answers** — conceptual understanding, not exact wording. Paraphrases are accepted.
+- **Completion** — tracks how many questions were answered and with what depth.
+- **Output** — grade (Excellent / Good / Needs Review / Incomplete), score, 2-3 sentences of feedback, and one tip — printed immediately in the student's Colab session.
 
 ---
 
