@@ -1,6 +1,8 @@
 # 📊 Data Pattern Recognition for the Rest of Us
 
-A technique-based, non-linear machine learning learning hub. Jump to any of 30 techniques — each notebook is self-contained with real data, runnable code, exercises, and a quiz. Content is modelled after **ISLP** (Introduction to Statistical Learning with Python) for core ML methods and **fpppy** (Forecasting: Principles & Practice, Pythonic) for time series.
+A technique-based, non-linear machine learning hub. 30 techniques — each notebook is self-contained with real data, runnable code, exercises, and a quiz with instant AI feedback.
+
+Content is modelled after **ISLP** (Introduction to Statistical Learning with Python) and **fpppy** (Forecasting: Principles & Practice, Pythonic).
 
 **[→ Open the interactive navigator](https://ladataanalytics.github.io/pattern-recognition-notebooks)**
 
@@ -10,13 +12,13 @@ A technique-based, non-linear machine learning learning hub. Jump to any of 30 t
 
 ## How to use this repo
 
-1. **Fork this repo** → you get your own copy of all 30 notebooks under your GitHub account
-2. **Click any "Open in Colab" badge** → notebook opens instantly, free GPU included
-3. **Work through the notebook** → concept → code → exercises → quiz
-4. **Save your work back** → File → Save a copy in GitHub (from Colab)
-5. **Track progress** on the [interactive navigator](https://ladataanalytics.github.io/pattern-recognition-notebooks)
-
-**New to Python?** See the Excel → Python Bridge section on the navigator — every spreadsheet skill maps directly.
+1. **Create a GitHub account** at [github.com/join](https://github.com/join) if you don't have one
+2. **Fork this repo** — click Fork (top-right). This creates your own copy of all 30 notebooks
+3. **Open any notebook** — click an Open in Colab badge below or on the navigator
+4. **Work through the notebook** — run cells top-to-bottom with `Shift+Enter`, fill in `# YOUR CODE HERE` sections
+5. **Complete the quiz** — each question is a text box, no code editing needed
+6. **Run the AI grading cell** — instant feedback powered by Gemini, runs free inside Colab, no API key required
+7. **Save to GitHub** — File → Save a copy in GitHub → choose your forked repo
 
 ---
 
@@ -94,17 +96,17 @@ A technique-based, non-linear machine learning learning hub. Jump to any of 30 t
 
 ## Notebook structure
 
-Every notebook follows the same format:
+Every notebook follows the same pattern:
 
 ```
-1. 🎯 Concept & intuition — plain English, no code
-2. 🧮 The math — plain notation, step by step
-3. 🐍 Python implementation — real datasets, runnable code
-4. 📊 Visualizations — plots that build intuition
-5. 💼 Exercise — you fill in the blanks with real data
-6. 🧪 Quiz — 5 multiple-choice questions, self-grading
-7. 📤 Submit — sends your score to the instructor dashboard
-8. 📚 Further reading — cross-links to related techniques
+1. 🎯 Concept & intuition    — plain English, no jargon
+2. 🧮 The math               — plain notation, step by step
+3. 🐍 Python implementation  — real business datasets, runnable code
+4. 📊 Visualisations         — plots that build intuition
+5. 💼 Exercise               — fill in YOUR CODE HERE with real data
+6. 📝 Quiz                   — 5 questions, each an input box (no code editing)
+7. 🤖 AI grading cell        — instant feedback from Gemini, free, no API key
+8. 📚 Further reading        — cross-links to related techniques
 ```
 
 ---
@@ -113,28 +115,56 @@ Every notebook follows the same format:
 
 ### Tracking students
 
-Each submission is identified by the student's `GITHUB_USERNAME`. To match usernames to real names, **collect GitHub usernames on day one** — add this question to your intake form, syllabus quiz, or first-day survey:
+Submissions are identified by `GITHUB_USERNAME`. **Collect GitHub usernames on day one** — add this to your intake form or first-day survey:
 
-> *"What is your GitHub username? (github.com → click your avatar → 'Your profile' — the username appears under your name)"*
+> *"What is your GitHub username? Go to github.com, click your avatar → Your profile — the username appears under your name."*
 
-Keep a simple roster: `GitHub username → Full name → Email`. This is the only administrative step required. Once you have it, every graded submission maps directly to a student.
+Keep a simple roster: `GitHub username → Full name → Email`. This is the only administrative step required.
 
 ### Setup checklist
 
-- **Day 1:** Collect GitHub usernames from all students (see above)
-- **Students fork the repo** → they get their own copy of all 30 notebooks
-- **Students get a free Gemini API key** at aistudio.google.com using their **personal Gmail** — many universities block AI Studio on managed accounts, so students must use a personal @gmail.com account
-- **Students add the key** to Colab Secrets (🔑 icon in left sidebar) once — it persists across all notebooks
-- **Students set `GITHUB_USERNAME`** at the bottom of each notebook before submitting
-- **Datasets are bundled** in `data/` — no internet required inside notebooks
-- **Customize quizzes** by editing the quiz cells at the bottom of any notebook
+| Step | Who | What |
+|------|-----|-------|
+| Collect GitHub usernames | Instructor | Day-one form or survey |
+| Fork the repo | Each student | One click on github.com |
+| Open notebook in Colab | Each student | Click any Open in Colab badge |
+| Complete quiz + AI grading | Each student | Text boxes + one click, no API key needed |
+| Save to GitHub | Each student | File → Save a copy in GitHub |
 
-### What the AI grades
+### AI grading — how it works
 
-Every notebook has an AI grading cell at the bottom powered by Gemini 2.0 Flash (free):
-- **Quiz answers** — conceptual understanding, not exact wording. Paraphrases are accepted.
-- **Completion** — tracks how many questions were answered and with what depth.
-- **Output** — grade (Excellent / Good / Needs Review / Incomplete), score, 2-3 sentences of feedback, and one tip — printed immediately in the student's Colab session.
+The grading cell at the bottom of every notebook:
+- Uses **Gemini 2.0 Flash** via Colab's built-in Google authentication — completely free, no API key, no setup
+- Grades quiz answers on **conceptual understanding**, not exact wording
+- Returns: overall grade (Excellent / Good / Needs Review / Incomplete), score /5, 2-3 sentences of feedback, one tip
+- Falls back to completion-based grading if Gemini is unavailable
+- Students set only their GitHub username — one field, one click
+
+### Model Explainability notebook
+
+The SHAP waterfall cell includes a **dropdown to select different loan applicant profiles** — students can toggle between 6 pre-defined applicants (high risk, borderline, low risk, thin credit file, high income/high debt, senior with long history) to see how SHAP explanations differ across risk profiles.
+
+---
+
+## Datasets
+
+All datasets are bundled in the `data/` folder — no internet downloads required inside notebooks.
+
+| File | Description | Source |
+|------|-------------|--------|
+| `Advertising.csv` | TV/radio/newspaper vs sales | ISLP Ch 3 |
+| `Auto.csv` | Car fuel efficiency | ISLP Ch 3 |
+| `Hitters.csv` | Baseball player salaries | ISLP Ch 6 |
+| `Default.csv` | Credit card default | ISLP Ch 4 |
+| `Smarket.csv` | S&P 500 daily returns | ISLP Ch 4 |
+| `Heart.csv` | Heart disease classification | ISLP Ch 8 |
+| `Carseats.csv` | Child car seat sales | ISLP Ch 8 |
+| `Credit.csv` | Credit card balance | ISLP Ch 3 |
+| `Wage.csv` | Wage and demographics | ISLP Ch 7 |
+| `USArrests.csv` | US state crime statistics | ISLP Ch 12 |
+| `Titanic.csv` | Passenger survival | EDA notebook |
+| `AirPassengers.csv` | Monthly airline passengers | fpppy |
+| `OnlineRetailRFM.csv` | Customer RFM features | UCI Online Retail (Chen et al. 2012) |
 
 ---
 
@@ -142,12 +172,12 @@ Every notebook has an AI grading cell at the bottom powered by Gemini 2.0 Flash 
 
 | Resource | What it covers |
 |----------|---------------|
-| [ISLP docs & labs](https://intro-stat-learning.github.io/ISLP/) | Official Python labs for the textbook |
+| [ISLP docs & labs](https://intro-stat-learning.github.io/ISLP/) | Official Python labs |
 | [ISLP free PDF](https://www.statlearning.com) | Full textbook download |
-| [fpppy — Forecasting: Principles & Practice](https://otexts.com/fpppy/) | Time series source textbook |
-| [Interpretable ML Book (Molnar)](https://christophm.github.io/interpretable-ml-book/) | SHAP, LIME, PDP reference |
-| [Google Colab](https://colab.research.google.com) | Free Python environment, no install needed |
+| [fpppy](https://otexts.com/fpppy/) | Time series textbook |
+| [Interpretable ML Book](https://christophm.github.io/interpretable-ml-book/) | SHAP, LIME, PDP |
+| [Google Colab](https://colab.research.google.com) | Free Python environment |
 
 ---
 
-*Data Pattern Recognition for the Rest of Us · Content modelled after ISLP (James, Witten, Hastie & Tibshirani) and fpppy (Hyndman & Athanasopoulos), with extended coverage of explainability, AutoML, count models, and time series forecasting.*
+*Data Pattern Recognition for the Rest of Us · Content modelled after ISLP (James, Witten, Hastie & Tibshirani) and fpppy (Hyndman & Athanasopoulos)*
