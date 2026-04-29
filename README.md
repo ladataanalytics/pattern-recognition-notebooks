@@ -133,12 +133,14 @@ Keep a simple roster: `GitHub username → Full name → Email`. This is the onl
 
 ### AI grading — how it works
 
-The grading cell at the bottom of every notebook:
-- Uses **Gemini 2.0 Flash** via Colab's built-in Google authentication — completely free, no API key, no setup
-- Grades quiz answers on **conceptual understanding**, not exact wording
-- Returns: overall grade (Excellent / Good / Needs Review / Incomplete), score /5, 2-3 sentences of feedback, one tip
-- Falls back to completion-based grading if Gemini is unavailable
-- Students set only their GitHub username — one field, one click
+The grading cell at the bottom of every notebook prints a ready-made prompt with the quiz questions and the student's answers. Students:
+1. Copy the prompt
+2. Click the **✨ Gemini button** in the Colab toolbar (top right)
+3. Paste and send
+
+Gemini grades each answer (CORRECT / PARTIAL / INCORRECT) with one sentence of feedback per question, an overall grade, and what to review. Students can keep the conversation going — paste any code output, chart, or error message from the notebook and ask follow-up questions for deeper explanation.
+
+No API key, no login, no setup.
 
 ### Model Explainability notebook
 
