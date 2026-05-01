@@ -176,7 +176,9 @@ All datasets are bundled in the `data/` folder — no internet downloads require
 |----------|---------------|
 | [ISLP docs & labs](https://intro-stat-learning.github.io/ISLP/) | Official Python labs |
 | [ISLP free PDF](https://www.statlearning.com) | Full textbook download |
+| [▶ Stanford ISLP lectures](https://www.youtube.com/playlist?list=PLoROMvodv4rPP6braWoRt5UCXYZ71GZIQ) | Full video lecture series supporting the textbook |
 | [fpppy](https://otexts.com/fpppy/) | Time series textbook |
+| [▶ fpppy video lectures](https://www.youtube.com/watch?v=uwKiT1o1TkI&list=PLyCNZ_xXGzpm7W9jLqbIyBAiSO5jDwJeE) | Video lectures supporting fpppy |
 | [Interpretable ML Book](https://christophm.github.io/interpretable-ml-book/) | SHAP, LIME, PDP |
 | [Google Colab](https://colab.research.google.com) | Free Python environment |
 
