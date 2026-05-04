@@ -165,7 +165,6 @@ All datasets are bundled in the `data/` folder — no internet downloads require
 | `Credit.csv` | Credit card balance | ISLP Ch 3 |
 | `Wage.csv` | Wage and demographics | ISLP Ch 7 |
 | `USArrests.csv` | US state crime statistics | ISLP Ch 12 |
-| `Titanic.csv` | Passenger survival | EDA notebook |
 | `AirPassengers.csv` | Monthly airline passengers | fpppy |
 | `OnlineRetailRFM.csv` | Customer RFM features | UCI Online Retail (Chen et al. 2012) |
 
