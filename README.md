@@ -1,6 +1,6 @@
 # 📊 Data Pattern Recognition for the Rest of Us
 
-A technique-based, non-linear machine learning hub. 30 techniques — each notebook is self-contained with real data, runnable code, exercises, and a quiz with instant AI feedback.
+A technique-based, non-linear machine learning hub. 31 techniques — each notebook is self-contained with real data, runnable code, exercises, and a quiz with instant AI feedback.
 
 Content is modelled after **ISLP** (Introduction to Statistical Learning with Python) and **fpppy** (Forecasting: Principles & Practice, Pythonic).
 
@@ -13,7 +13,7 @@ Content is modelled after **ISLP** (Introduction to Statistical Learning with Py
 ## How to use this repo
 
 1. **Create a GitHub account** at [github.com/join](https://github.com/join) if you don't have one
-2. **Fork this repo** — click Fork (top-right). This creates your own copy of all 30 notebooks
+2. **Fork this repo** — click Fork (top-right). This creates your own copy of all 31 notebooks
 3. **Open any notebook** — click an Open in Colab badge below or on the navigator
 4. **Work through the notebook** — run cells top-to-bottom with `Shift+Enter`, fill in `# YOUR CODE HERE` sections
 5. **Complete the quiz** — each question is a text box, no code editing needed
@@ -31,6 +31,7 @@ Content is modelled after **ISLP** (Introduction to Statistical Learning with Py
 | Cross-Validation & Resampling | ISLP Ch 5 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ladataanalytics/pattern-recognition-notebooks/blob/main/notebooks/cross-validation.ipynb) |
 | EDA & Data Profiling | ISLP Supplement | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ladataanalytics/pattern-recognition-notebooks/blob/main/notebooks/eda-profiling.ipynb) |
 | Bayesian Thinking | Extended | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ladataanalytics/pattern-recognition-notebooks/blob/main/notebooks/bayesian-intro.ipynb) |
+| Model Evaluation & Accuracy | Foundations | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ladataanalytics/pattern-recognition-notebooks/blob/main/notebooks/model-evaluation.ipynb) |
 
 ## 📈 Regression
 
