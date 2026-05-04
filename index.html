@@ -727,7 +727,8 @@ footer a:hover{text-decoration:underline}
 <!-- FOOTER -->
 <footer>
   <span>Data Pattern Recognition for the Rest of Us · Modelled after <strong>ISLP</strong> (James, Witten, Hastie & Tibshirani) and <strong>fpppy</strong> (Hyndman & Athanasopoulos)</span>
-  <a href="https://intro-stat-learning.github.io/ISLP/" target="_blank">ISLP docs & labs →</a>
+  <a href="https://intro-stat-learning.github.io/ISLP/" target="_blank">🐛 Report a bug →</a>
+  <a href="https://github.com/ladataanalytics/pattern-recognition-notebooks/issues" target="_blank">ISLP docs & labs →</a>
   <a href="https://www.statlearning.com" target="_blank">ISLP free PDF →</a>
   <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rPP6braWoRt5UCXYZ71GZIQ" target="_blank">▶ Stanford ISLP lectures →</a>
   <a href="https://otexts.com/fpppy/" target="_blank">fpppy (Time Series) →</a>
@@ -964,6 +965,68 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
+<!-- ═══ MODEL ACCURACY PANEL ═══ -->
+<div id="accuracy-section" style="padding:0 32px 16px;position:relative;z-index:1">
+  <div style="background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+    <div style="padding:18px 24px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none" onclick="toggleAccuracy()">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px">🎯</span>
+        <div>
+          <div style="font-family:var(--font-serif);font-size:18px;color:var(--text)">How to Assess Model Accuracy</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Choosing the right metrics · Train vs Test · Detecting overfitting · Download comparison template</div>
+        </div>
+      </div>
+      <button id="accuracy-toggle-btn" style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--muted);cursor:pointer;font-family:var(--font-sans)">▼ Show</button>
+    </div>
+    <div id="accuracy-body" style="display:none;padding:0 24px 24px">
+      <div style="background:var(--blue);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;gap:14px;align-items:flex-start">
+        <span style="font-size:22px;flex-shrink:0">⚠️</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">Always evaluate BOTH Training and Test performance</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.85);line-height:1.6">A model with 99% training accuracy and 61% test accuracy has memorised the training data — it is <em>not</em> a good model. Test performance is what matters. A large Train−Test gap means <strong>overfitting</strong>.</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:16px">
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <div style="background:#2e6da4;padding:10px 16px;font-size:12px;font-weight:700;color:#fff;display:flex;justify-content:space-between"><span>📈 Regression Metrics</span><span style="opacity:.8;font-weight:400">lower = better</span></div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr style="background:var(--bg3)"><td style="padding:8px 14px;font-weight:600;color:var(--text);width:22%">RMSE</td><td style="padding:8px 14px;color:var(--muted)">Root Mean Squared Error — same units as target. <strong style="color:var(--text)">Most interpretable.</strong></td></tr>
+            <tr><td style="padding:8px 14px;font-weight:600;color:var(--text)">MAE</td><td style="padding:8px 14px;color:var(--muted)">Mean Absolute Error — robust to outliers.</td></tr>
+            <tr style="background:var(--bg3)"><td style="padding:8px 14px;font-weight:600;color:var(--text)">MSE</td><td style="padding:8px 14px;color:var(--muted)">Mean Squared Error — penalises large errors heavily.</td></tr>
+            <tr><td style="padding:8px 14px;font-weight:600;color:var(--text)">MAPE</td><td style="padding:8px 14px;color:var(--muted)">% error — scale-free. Avoid when target has zeros.</td></tr>
+          </table>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <div style="background:#1a5276;padding:10px 16px;font-size:12px;font-weight:700;color:#fff;display:flex;justify-content:space-between"><span>🎯 Classification Metrics</span><span style="opacity:.8;font-weight:400">higher = better</span></div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr style="background:var(--bg3)"><td style="padding:8px 14px;font-weight:600;color:var(--text);width:22%">Accuracy</td><td style="padding:8px 14px;color:var(--muted)">% correct. <strong style="color:#e85d20">Misleading when classes are imbalanced.</strong></td></tr>
+            <tr><td style="padding:8px 14px;font-weight:600;color:var(--text)">Recall</td><td style="padding:8px 14px;color:var(--muted)">Catches positives. Prioritise when missing one is costly.</td></tr>
+            <tr style="background:var(--bg3)"><td style="padding:8px 14px;font-weight:600;color:var(--text)">Precision</td><td style="padding:8px 14px;color:var(--muted)">Of predicted positives, how many correct. Prioritise to reduce false alarms.</td></tr>
+            <tr><td style="padding:8px 14px;font-weight:600;color:var(--text)">F1 Score</td><td style="padding:8px 14px;color:var(--muted)"><strong style="color:var(--text)">Best for imbalanced classes.</strong> Harmonic mean of Precision + Recall.</td></tr>
+            <tr style="background:var(--bg3)"><td style="padding:8px 14px;font-weight:600;color:var(--text)">AUC</td><td style="padding:8px 14px;color:var(--muted)">Works across all thresholds. 0.5=random, 1.0=perfect.</td></tr>
+          </table>
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:16px">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">🔍 Overfit Detection — Train vs Test Gap</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+          <div style="padding:12px 14px;border-radius:8px;background:#d5f5e3;border:1px solid #1a7a45"><div style="font-size:12px;font-weight:700;color:#1a7a45;margin-bottom:4px">✓ Gap &lt; 0.01</div><div style="font-size:11px;color:#1a5c35;line-height:1.5">Good generalisation.</div></div>
+          <div style="padding:12px 14px;border-radius:8px;background:#fef9e7;border:1px solid #e8873a"><div style="font-size:12px;font-weight:700;color:#e8873a;margin-bottom:4px">~ Gap 0.01–0.05</div><div style="font-size:11px;color:#9a6015;line-height:1.5">Monitor — consider regularisation.</div></div>
+          <div style="padding:12px 14px;border-radius:8px;background:#fdedec;border:1px solid #e74c3c"><div style="font-size:12px;font-weight:700;color:#e74c3c;margin-bottom:4px">⚠ Gap &gt; 0.05</div><div style="font-size:11px;color:#a93226;line-height:1.5">Overfitting — add regularisation or reduce complexity.</div></div>
+          <div style="padding:12px 14px;border-radius:8px;background:#eaf2fb;border:1px solid #2e6da4"><div style="font-size:12px;font-weight:700;color:#2e6da4;margin-bottom:4px">📌 Key rule</div><div style="font-size:11px;color:#1a4a7a;line-height:1.5">Use the same random seed and split for all models.</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 18px;background:linear-gradient(135deg,#1e3a5f 0%,#2e6da4 100%);border-radius:10px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">📊 Full Comparison Template</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.8);line-height:1.6">Excel workbook — Train + Test for every metric, automatic overfit detection, model selection guide.</div>
+        </div>
+        <a href="https://raw.githubusercontent.com/ladataanalytics/pattern-recognition-notebooks/main/Model_Accuracy_Comparison.xlsx" download="Model_Accuracy_Comparison.xlsx" target="_blank" style="padding:10px 22px;background:#e8873a;color:#fff;border-radius:8px;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0">⬇ Download Excel Template</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- PROGRESS -->
 <div id="global-progress">
   <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
@@ -972,7 +1035,7 @@ footer a:hover{text-decoration:underline}
 
 <!-- FILTERS -->
 <div class="filters">
-  <button class="chip active" data-filter="all" onclick="setFilter('all',this)">All 30</button>
+  <button class="chip active" data-filter="all" onclick="setFilter('all',this)">All 31</button>
   <button class="chip" data-filter="Foundations" onclick="setFilter('Foundations',this)">Foundations</button>
   <button class="chip" data-filter="Regression" onclick="setFilter('Regression',this)">Regression</button>
   <button class="chip" data-filter="Classification" onclick="setFilter('Classification',this)">Classification</button>
