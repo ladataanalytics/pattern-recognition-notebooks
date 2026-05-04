@@ -1077,7 +1077,7 @@ footer a:hover{text-decoration:underline}
 
       <div style="margin-top:20px;padding:14px 16px;background:var(--blue-light);border:1px solid rgba(30,95,168,.2);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.7">
         <strong style="color:var(--blue)">💡 How long does this take?</strong>
-        Each technique notebook takes 45–75 minutes. The full 30-technique curriculum is roughly 40 hours of active learning — designed to be done one or two techniques per week alongside a course or self-study.
+        Each technique notebook takes 45–75 minutes. The full 31-technique curriculum is roughly 42 hours of active learning — designed to be done one or two techniques per week alongside a course or self-study.
       </div>
     </div>
   </div>
@@ -1452,7 +1452,7 @@ function updateStats() {
   document.getElementById('stat-quiz').textContent = quizPassed;
   document.getElementById('prog-fill').style.width = Math.round(started / 31 * 100) + '%';
   document.getElementById('prog-label').textContent = `${started} of 31 techniques started · ${done} completed · ${quizPassed} quizzes passed`;
-  document.getElementById('progress-summary').innerHTML = `<strong>${done}/30</strong> done`;
+  document.getElementById('progress-summary').innerHTML = `<strong>${done}/31</strong> done`;
 }
 
 function filteredTechniques() {
