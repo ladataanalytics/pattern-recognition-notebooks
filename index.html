@@ -552,7 +552,7 @@ footer a:hover{text-decoration:underline}
   <div class="hero-stats">
     <div class="stat"><div class="stat-val" id="stat-done">0</div><div class="stat-lbl">Completed</div></div>
     <div class="stat"><div class="stat-val blue" id="stat-quiz">0</div><div class="stat-lbl">Quizzes passed</div></div>
-    <div class="stat"><div class="stat-val">31</div><div class="stat-lbl">Techniques</div></div>
+    <div class="stat"><div class="stat-val">33</div><div class="stat-lbl">Techniques</div></div>
     <div class="stat"><div class="stat-val">8</div><div class="stat-lbl">Topic groups</div></div>
   </div>
 </div>
@@ -705,7 +705,7 @@ footer a:hover{text-decoration:underline}
         </div>
         <div style="padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:12px">
           <div style="font-weight:600;color:var(--text);margin-bottom:4px">🤖 ML Access</div>
-          <div style="color:var(--muted)">All 31 techniques in this course require Python. Excel has no equivalent for Random Forests or SHAP.</div>
+          <div style="color:var(--muted)">All 33 techniques in this course require Python. Excel has no equivalent for Random Forests or SHAP.</div>
         </div>
         <div style="padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:12px">
           <div style="font-weight:600;color:var(--text);margin-bottom:4px">🆓 Free forever</div>
@@ -1035,7 +1035,7 @@ footer a:hover{text-decoration:underline}
 
 <!-- FILTERS -->
 <div class="filters">
-  <button class="chip active" data-filter="all" onclick="setFilter('all',this)">All 31</button>
+  <button class="chip active" data-filter="all" onclick="setFilter('all',this)">All 33</button>
   <button class="chip" data-filter="Foundations" onclick="setFilter('Foundations',this)">Foundations</button>
   <button class="chip" data-filter="Regression" onclick="setFilter('Regression',this)">Regression</button>
   <button class="chip" data-filter="Classification" onclick="setFilter('Classification',this)">Classification</button>
@@ -1229,6 +1229,8 @@ const TECHNIQUES = [
   {id:'linear-regression',title:'Linear Regression',group:'Regression',emoji:'📈',desc:'OLS, RSE, R², F-statistic, confidence intervals, categorical predictors',islp:'ISLP Ch 3'},
   {id:'regularization',title:'Ridge & Lasso',group:'Regression',emoji:'🎯',desc:'Shrinkage methods, L1 vs L2 penalties, bias-variance trade, cross-validated λ',islp:'ISLP Ch 6'},
   {id:'subset-selection',title:'Subset & Model Selection',group:'Regression',emoji:'🗂️',desc:'Best subset, forward/backward stepwise, Cp, BIC, adjusted R²',islp:'ISLP Ch 6'},
+  {id:'pcr',title:'Principal Components Regression',group:'Regression',emoji:'📉',desc:'Compress X into PCA components then regress — solves multicollinearity, back-transform to original feature space.',islp:'ISLP Ch 6'},
+  {id:'pls',title:'Partial Least Squares',group:'Regression',emoji:'🔀',desc:'Components maximise X→Y covariance (not just X variance). VIP scores, NIPALS algorithm, grand comparison vs Ridge/Lasso/PCR.',islp:'ISLP Ch 6'},
   {id:'beyond-linearity',title:'Beyond Linearity',group:'Regression',emoji:'〰️',desc:'Polynomial regression, step functions, splines, local regression, GAMs',islp:'ISLP Ch 7'},
   {id:'logistic-regression',title:'Logistic Regression',group:'Classification',emoji:'🪢',desc:'Log-odds, sigmoid, MLE, confusion matrix, ROC/AUC, multinomial extension',islp:'ISLP Ch 4'},
   {id:'lda-qda',title:'LDA & QDA',group:'Classification',emoji:'📦',desc:'Linear and quadratic discriminant analysis, Bayes classifier, decision boundaries',islp:'ISLP Ch 4'},
@@ -1515,7 +1517,7 @@ function updateStats() {
   document.getElementById('stat-quiz').textContent = quizPassed;
   document.getElementById('prog-fill').style.width = Math.round(started / 31 * 100) + '%';
   document.getElementById('prog-label').textContent = `${started} of 31 techniques started · ${done} completed · ${quizPassed} quizzes passed`;
-  document.getElementById('progress-summary').innerHTML = `<strong>${done}/31</strong> done`;
+  document.getElementById('progress-summary').innerHTML = `<strong>${done}/33</strong> done`;
 }
 
 function filteredTechniques() {
