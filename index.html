@@ -547,7 +547,7 @@ footer a:hover{text-decoration:underline}
 <!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow">Data Pattern Recognition for the Rest of Us</div>
-  <h1>31 Techniques.<br><em>One place</em> to learn them <strong>all.</strong></h1>
+  <h1>33 Techniques.<br><em>One place</em> to learn them <strong>all.</strong></h1>
   <p>A non-linear ML learning hub built around techniques, not chapters. Content is modelled after <a href="https://intro-stat-learning.github.io/ISLP/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">ISLP</a> (Introduction to Statistical Learning with Python) — with <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rPP6braWoRt5UCXYZ71GZIQ" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">▶ Stanford lectures</a> — and <a href="https://otexts.com/fpppy/" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">fpppy</a> (Forecasting: Principles &amp; Practice, Pythonic) — with <a href="https://www.youtube.com/watch?v=uwKiT1o1TkI&list=PLyCNZ_xXGzpm7W9jLqbIyBAiSO5jDwJeE" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">▶ video lectures</a> — for time series. Jump to any technique — each has a Colab notebook, exercises, and a quiz.</p>
   <div class="hero-stats">
     <div class="stat"><div class="stat-val" id="stat-done">0</div><div class="stat-lbl">Completed</div></div>
@@ -929,7 +929,7 @@ footer a:hover{text-decoration:underline}
       </div>
       <div class="setup-step">
         <div class="step-num">2</div>
-        <div class="step-text"><strong>Fork the course repo.</strong> Go to the repo link in the header and click <strong>Fork</strong> (top-right). This creates your own copy of all 31 notebooks under your GitHub account.</div>
+        <div class="step-text"><strong>Fork the course repo.</strong> Go to the repo link in the header and click <strong>Fork</strong> (top-right). This creates your own copy of all 33 notebooks under your GitHub account.</div>
       </div>
       <div class="setup-step">
         <div class="step-num">3</div>
@@ -1030,7 +1030,7 @@ footer a:hover{text-decoration:underline}
 <!-- PROGRESS -->
 <div id="global-progress">
   <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
-  <div class="prog-label" id="prog-label">0 of 31 techniques started</div>
+  <div class="prog-label" id="prog-label">0 of 33 techniques started</div>
 </div>
 
 <!-- FILTERS -->
@@ -1133,14 +1133,14 @@ footer a:hover{text-decoration:underline}
             <span style="background:var(--purple);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px">TRACK 4</span>
             <span style="font-size:14px;font-weight:600;color:var(--text)">Jump to a Specific Technique</span>
           </div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7">You know what you need. Use the search bar or topic filters below to jump directly to any of the 31 techniques. Each notebook is self-contained — no prior notebooks required.</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7">You know what you need. Use the search bar or topic filters below to jump directly to any of the 33 techniques. Each notebook is self-contained — no prior notebooks required.</div>
         </div>
 
       </div>
 
       <div style="margin-top:20px;padding:14px 16px;background:var(--blue-light);border:1px solid rgba(30,95,168,.2);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.7">
         <strong style="color:var(--blue)">💡 How long does this take?</strong>
-        Each technique notebook takes 45–75 minutes. The full 31-technique curriculum is roughly 42 hours of active learning — designed to be done one or two techniques per week alongside a course or self-study.
+        Each technique notebook takes 45–75 minutes. The full 33-technique curriculum is roughly 45 hours of active learning — designed to be done one or two techniques per week alongside a course or self-study.
       </div>
     </div>
   </div>
@@ -1515,8 +1515,8 @@ function updateStats() {
 
   document.getElementById('stat-done').textContent = done;
   document.getElementById('stat-quiz').textContent = quizPassed;
-  document.getElementById('prog-fill').style.width = Math.round(started / 31 * 100) + '%';
-  document.getElementById('prog-label').textContent = `${started} of 31 techniques started · ${done} completed · ${quizPassed} quizzes passed`;
+  document.getElementById('prog-fill').style.width = Math.round(started / 33 * 100) + '%';
+  document.getElementById('prog-label').textContent = `${started} of 33 techniques started · ${done} completed · ${quizPassed} quizzes passed`;
   document.getElementById('progress-summary').innerHTML = `<strong>${done}/33</strong> done`;
 }
 
